@@ -7,7 +7,7 @@ SchoolCheatTools is a free cheat tool developed for students. It is compatible w
 
 INSTALL
 
-1: git clone
+1: git clone https://github.com/mrdog233o5/SchoolCheatTools.git
 
 2: cd SchoolCheatTools/
 

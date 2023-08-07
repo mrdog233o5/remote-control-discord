@@ -4,8 +4,8 @@ import requests
 import os
 from time import *
 old_command = 0
-server_ip = "192.168.0.216"
-
+server_ip = "192.168.0.216" #edit this variable to the server ip, which can be found in the description
+#I will also update this variable from the code if the server ip changed, so if the ip stopped working, check the description
 print('''
       
 ░██████╗░█████╗░██╗░░██╗░█████╗░░█████╗░██╗░░░░░░█████╗░██╗░░██╗███████╗░█████╗░████████╗████████╗░█████╗░░█████╗░██╗░░░░░░██████╗

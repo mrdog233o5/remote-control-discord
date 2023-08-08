@@ -11,4 +11,4 @@ Please install SchoolCheatTools in the default folder so it can work properly, o
 DO THIS TO EXECUTE SCHOOLCHEAT
 =
 
-python3 ~/SchoolCheatTools/SchoolCheatTools.py
+~/SchoolCheatTools/SchoolCheatTools.sh

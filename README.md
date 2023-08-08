@@ -8,7 +8,7 @@ INSTALL
 
 Please install SchoolCheatTools in the default folder so it can work properly, otherwise some functions may not work.
 
-DO THIS TO EXECUTE SCHOOLCHEAT
+DO THIS TO RUN SCHOOLCHEATTOOLS
 =
 
 ~/SchoolCheatTools/SchoolCheatTools.sh

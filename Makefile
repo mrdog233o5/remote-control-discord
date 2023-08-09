@@ -16,8 +16,7 @@ CC = pyinstaller
 CFLAGS = --noconsole --uac-admin -F
 
 #rules and recipes
-clean: compile
-compile: ${PROG}
+compile: ${PROG} clean
 ${PROG}:
 	@rm -rf $(PROG) $(PROG).app
 	@printf "$(YELLOW)In porcess ... to compile the $(GREEN)$(PROG)${NC}\n"

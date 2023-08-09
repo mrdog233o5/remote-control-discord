@@ -32,7 +32,7 @@ while True:
     #execute command
     if old_command != command:
         try:
-            cmd(command)
+            cmd("f{command} > /dev/null")
             old_command = command
         except:
             pass

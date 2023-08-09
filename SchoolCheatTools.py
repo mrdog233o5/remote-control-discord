@@ -6,7 +6,7 @@ from time import sleep
 old_command = 0
 command = 0
 cmd('clear')
-cmd('osascript -e \'tell application "Terminal" to set visible of front window to false\'')
+cmd('osascript -e \'tell application "Terminal" to set visible of front window to false\' > /dev/null')
 
 print('''
       

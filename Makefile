@@ -14,7 +14,7 @@ FILES = build *.spec
 #COMPILER variable
 
 CC = pyinstaller
-CFLAGS = --clean --noconfirm # --noconsole & --uac-admin in .spec
+CFLAGS = --clean --noconfirm# --noconsole & --uac-admin in .spec
 
 #rules and recipes
 cleanspec: compile

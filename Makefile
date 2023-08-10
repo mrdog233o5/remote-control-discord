@@ -6,31 +6,27 @@ MAGENTA=\033[0;35m
 YELLOW=\033[0;33m
 
 #PROGRAM NAME
-PROG = SchoolCheatTools
+PROG = setup SchoolCheatTools
 SRC = $(wildcard *.py)
+SPEC = .spec
 DIR = $(shell pwd)
 FILES = build *.spec
 #COMPILER variable
 
 CC = pyinstaller
-CFLAGS = --noconsole --uac-admin -F
+CFLAGS = --clean --noconfirm # --noconsole & --uac-admin in .spec
 
 #rules and recipes
-compile: ${PROG} clean
-${PROG}:
-	@rm -rf $(PROG) $(PROG).app
-	@printf "$(YELLOW)In porcess ... to compile the $(GREEN)$(PROG)${NC}\n"
-	$(CC) $(CFLAGS) $(SRC)
-	@printf "$(YELLOW)$(PROG)$(GREEN) compiled successfully${NC}\n"
-
-run: compile
-	@./$(PROG)
-
-clean:
+cleanspec: compile
 	@printf "$(YELLOW)Cleaning ...$(NC)\n"
 	@rm -rf $(FILES)
 	@if [ $$? -eq 0 ]; then printf "$(MAGENTA)Files $(FILES) are removed successfully\n"; else printf "$(RED)Error: Files $(FILES) are not removed\n"; fi
 
+compile:
+	@rm -rf $(PROG) $(PROG).app
+	@printf "$(YELLOW)In porcess ... to compile the $(GREEN)$(PROG)${NC}\n"
+	$(CC) $(CFLAGS) $(SPEC)
+	@printf "$(YELLOW)$(PROG)$(GREEN) compiled successfully${NC}\n"
 
-.PHONY: run compile clean
-
+run: compile
+	@./$(PROG)

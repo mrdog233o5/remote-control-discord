@@ -27,8 +27,7 @@ cleanspec:
 	@if [ $$? -eq 0 ]; then printf "$(MAGENTA)Files $(FILES) are removed successfully\n"; else printf "$(RED)Error: Files $(FILES) are not removed\n"; fi
 
 build:
-	@rm -rf $(PROG1) $(PROG1).app
-	@rm -rf $(PROG1) $(PROG2).app
+	@rm -f dist/$(PROG1) dist/$(PROG1).app dist/$(PROG1) dist/$(PROG2).app
 	@printf "$(YELLOW)In porcess ... to compile the $(GREEN)$(PROG1)${NC}\n"
 	$(CC) $(CFLAGS) $(PROG1)
 	@printf "$(YELLOW)In porcess ... to compile the $(GREEN)$(PROG2)${NC}\n"

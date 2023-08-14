@@ -27,7 +27,7 @@ while True:
                 old_command = command
             except:
                 pass
-        tryy:
+        try:
             sleep(0.1)
         except KeyboardInterrupt:
             continue

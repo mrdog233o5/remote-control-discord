@@ -22,23 +22,23 @@ CFLAGS = --clean --noconfirm --noconsole --uac-admin -F
 all: build cleanspec
 
 cleanspec:
-    @printf "$(YELLOW)Cleaning spec...$(NC)\n"
-    @rm -rf $(FILES)
-    @if [ $$? -eq 0 ]; then printf "$(MAGENTA)Files $(FILES) are removed successfully\n"; else printf "$(RED)Error: Files $(FILES) are not removed\n"; fi
+	@printf "$(YELLOW)Cleaning spec...$(NC)\n"
+	@rm -rf $(FILES)
+	@if [ $$? -eq 0 ]; then printf "$(MAGENTA)Files $(FILES) are removed successfully\n"; else printf "$(RED)Error: Files $(FILES) are not removed\n"; fi
 
 build:
-    @rm -rf $(PROG1) $(PROG1).app
-    @rm -rf $(PROG1) $(PROG2).app
-    @printf "$(YELLOW)In porcess ... to compile the $(GREEN)$(PROG1)${NC}\n"
-    $(CC) $(CFLAGS) $(PROG1)
-    @printf "$(YELLOW)In porcess ... to compile the $(GREEN)$(PROG2)${NC}\n"
-    $(CC) $(CFLAGS) $(PROG2)
-    @printf "$(YELLOW)$(PROG1) $(PROG2)$(GREEN) compiled successfully${NC}\n"
+	@rm -rf $(PROG1) $(PROG1).app
+	@rm -rf $(PROG1) $(PROG2).app
+	@printf "$(YELLOW)In porcess ... to compile the $(GREEN)$(PROG1)${NC}\n"
+	$(CC) $(CFLAGS) $(PROG1)
+	@printf "$(YELLOW)In porcess ... to compile the $(GREEN)$(PROG2)${NC}\n"
+	$(CC) $(CFLAGS) $(PROG2)
+	@printf "$(YELLOW)$(PROG1) $(PROG2)$(GREEN) compiled successfully${NC}\n"
 
 run: build
-    @open ./dist/*
+	@open ./dist/*
 
 clean: cleanspec
-    @printf "$(YELLOW)Cleaning...$(NC)\n"
-    @rm -rf dist
-    @if [ $$? -eq 0 ]; then printf "$(MAGENTA)Files dist(*) are removed successfully\n"; else printf "$(RED)Error: Files dist(*) are not removed\n"; fi
+	@printf "$(YELLOW)Cleaning...$(NC)\n"
+	@rm -rf dist
+	@if [ $$? -eq 0 ]; then printf "$(MAGENTA)Files dist(*) are removed successfully\n"; else printf "$(RED)Error: Files dist(*) are not removed\n"; fi

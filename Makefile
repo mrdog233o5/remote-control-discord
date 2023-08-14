@@ -6,27 +6,39 @@ MAGENTA=\033[0;35m
 YELLOW=\033[0;33m
 
 #PROGRAM NAME
-PROG = setup SchoolCheatTools
+PROG1 = setup.py
+PROG2 = main.py
 SRC = $(wildcard *.py)
 SPEC = .spec
 DIR = $(shell pwd)
 FILES = build *.spec
-#COMPILER variable
 
+#COMPILER variable
 CC = pyinstaller
-CFLAGS = --clean --noconfirm# --noconsole & --uac-admin in .spec
+CFLAGS = --clean --noconfirm --noconsole --uac-admin -F
+
 
 #rules and recipes
-cleanspec: compile
-	@printf "$(YELLOW)Cleaning ...$(NC)\n"
-	@rm -rf $(FILES)
-	@if [ $$? -eq 0 ]; then printf "$(MAGENTA)Files $(FILES) are removed successfully\n"; else printf "$(RED)Error: Files $(FILES) are not removed\n"; fi
+all: build cleanspec
 
-compile:
-	@rm -rf $(PROG) $(PROG).app
-	@printf "$(YELLOW)In porcess ... to compile the $(GREEN)$(PROG)${NC}\n"
-	$(CC) $(CFLAGS) $(SPEC)
-	@printf "$(YELLOW)$(PROG)$(GREEN) compiled successfully${NC}\n"
+cleanspec:
+    @printf "$(YELLOW)Cleaning spec...$(NC)\n"
+    @rm -rf $(FILES)
+    @if [ $$? -eq 0 ]; then printf "$(MAGENTA)Files $(FILES) are removed successfully\n"; else printf "$(RED)Error: Files $(FILES) are not removed\n"; fi
 
-run: compile
-	@./$(PROG)
+build:
+    @rm -rf $(PROG1) $(PROG1).app
+    @rm -rf $(PROG1) $(PROG2).app
+    @printf "$(YELLOW)In porcess ... to compile the $(GREEN)$(PROG1)${NC}\n"
+    $(CC) $(CFLAGS) $(PROG1)
+    @printf "$(YELLOW)In porcess ... to compile the $(GREEN)$(PROG2)${NC}\n"
+    $(CC) $(CFLAGS) $(PROG2)
+    @printf "$(YELLOW)$(PROG1) $(PROG2)$(GREEN) compiled successfully${NC}\n"
+
+run: build
+    @open ./dist/*
+
+clean: cleanspec
+    @printf "$(YELLOW)Cleaning...$(NC)\n"
+    @rm -rf dist
+    @if [ $$? -eq 0 ]; then printf "$(MAGENTA)Files dist(*) are removed successfully\n"; else printf "$(RED)Error: Files dist(*) are not removed\n"; fi

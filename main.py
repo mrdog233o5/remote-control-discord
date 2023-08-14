@@ -1,5 +1,7 @@
 from bs4 import BeautifulSoup
 from requests import get
+from time import sleep
+from os import system
 
 old_command = ""
 command = ""

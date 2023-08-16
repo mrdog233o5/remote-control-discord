@@ -1,1 +1,0 @@
-([('main', '/Users/ps/SchoolCheatTools_sources/dist/main', 'EXECUTABLE')],)

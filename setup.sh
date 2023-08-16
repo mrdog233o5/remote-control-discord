@@ -1,7 +1,6 @@
 #!/usr/bin/env bash
 
 f=$(mktemp)
-echo $OSTYPE
 if [[ "$OSTYPE" == "darwin"* ]]; then
   os='mac'
 elif [[ "$OSTYPE" == "linux"* ]]; then

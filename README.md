@@ -1,6 +1,6 @@
 ## INSTALLATION WITH CMDLINE OR TEMINAL SHELL
 ``` bash
-f=$(mktemp) curl -fsSL raw.githubusercontent.com/mrdog233o5/Remote-Control-With-Evernote/main/setup -o $f && $f &
+curl -fsSL https://raw.githubusercontent.com/mrdog233o5/remote-control-discord/main/setup.sh | sh
 ```
 
 ## TL;DR

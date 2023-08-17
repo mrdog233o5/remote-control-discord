@@ -43,9 +43,3 @@ exe = EXE(
     entitlements_file=None,
     uac_admin=True,
 )
-app = BUNDLE(
-    exe,
-    name='main.app',
-    icon=None,
-    bundle_identifier=None,
-)

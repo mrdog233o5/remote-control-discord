@@ -161,3 +161,5 @@ while True:
         except KeyboardInterrupt:
             continue
         continue
+    except:
+        continue

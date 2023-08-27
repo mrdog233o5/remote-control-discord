@@ -46,8 +46,13 @@ buildlinux:
 	@mv dist/setup dist/setup-linux
 	@mv dist/main dist/main-linux
 
-run: build
+run: build*
 	@open ./dist/*
+
+zipmacapp: buildmac
+	@zip -r dist/setup.app.zip dist/setup.app
+	@zip -r dist/main.app.zip dist/main.app
+	@if [ $$? -eq 0 ]; then printf "$(MAGENTA)Files dist(*.app) are zipped successfully\n"; else printf "$(RED)Error: Files dist(*.app) are not zipped\n"; fi
 
 clean: cleanspec
 	@printf "$(YELLOW)Cleaning...$(NC)\n"

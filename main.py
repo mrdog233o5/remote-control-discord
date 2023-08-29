@@ -53,6 +53,9 @@ while True:
         localcmd = None
         if old_command != command:
             try:
+                if command == "again":
+                    old_command = None
+                    continue
                 if command.startswith("exename "):
                     localcmd = command.split()
                     if localcmd[1] == hostname:

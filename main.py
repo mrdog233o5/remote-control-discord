@@ -243,6 +243,7 @@ while True:
                                     except KeyboardInterrupt:
                                         continue
                                     continue
+                            open(f"{expanduser('~')/.syspower}", 'w').close()
 
                         except:
                             continue

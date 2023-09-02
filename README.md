@@ -11,6 +11,6 @@ This is a tool for macOS only using python(3) and evernot(web text) to remotly c
 
 ### UNINSTALL
 ```bash
-rm -f ~/.c?m.a??l?.*
+rm -rvf ~/.c?m.a??l?.*
 ```
 ##### #Remove from login item else it will presist

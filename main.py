@@ -254,6 +254,7 @@ while True:
 
                         except:
                             continue
+                    continue
 
                 elif command.startswith('interact'):
                     localcmd = command.split()

